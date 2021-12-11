@@ -1,59 +1,61 @@
 <template>
-  <v-container>
-    <Loader v-show="this.loading"> </Loader>
-    <v-row
-      v-show="!this.loading"
-      align-h="center"
-      class="text-center"
-    >
-      <v-col
-        sm="12"
-        lg="4"
-        md="4"
-        v-for="flag in listItems"
-        :key="flag.alpha2Code"
-        class="m-auto p-0"
-      >
-        <a @click="sendCountryToViewIt(flag.alpha2Code)">
-          <v-img
-            class="country-img mb-3"
-            :src="flag.flag"
-            :alt="flag.name"
-          ></v-img>
-        </a>
-      </v-col>
-    </v-row>
-
-    <v-row v-show="listItems.length > 2" class="mt-3">
-      <v-col>
-        <div class="pagination">
-          <div
-            v-show="!disablePrevButton"
-            @click="prevPage()"
-            class="back-page cursor"
-          > ❮ &nbsp; </div>
-          <div
-            v-for="page in allowList"
-            :key="page"
-          >
-            <div
-              class="page cursor"
-              :class="currentPage === page ? 'active' : ''"
-              @click="currentPage = page"
+    <v-container>
+        <Loader v-show="this.loading"> </Loader>
+        <v-row
+            v-show="!this.loading"
+            align-h="center"
+            class="text-center"
             >
-              {{ page }}
-            </div>
-          </div>
-          <div
-            v-show="!disableNextButton"
-            @click="nextPage()"
-            class="next-page cursor"
-            > &nbsp; ❯
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+            <v-col
+                sm="12"
+                md="4"
+                v-for="flag in listItems"
+                :key="flag.alpha2Code"
+                class="m-auto p-0"
+            >
+                <a @click="sendCountryToViewIt(flag.alpha2Code)">
+                    <v-img
+                        class="country-img mb-3"
+                        :src="flag.flag"
+                        :alt="flag.name"
+                    ></v-img>
+                </a>
+            </v-col>
+        </v-row>
+
+        <v-row v-show="listItems.length > 2" class="mt-3">
+            <v-col>
+                <div class="pagination">
+                    <div
+                        v-show="!disablePrevButton"
+                        @click="prevPage()"
+                        class="back-page cursor"
+                    >   ❮ &nbsp;
+                    </div>
+
+                    <div
+                        v-for="page in allowList"
+                        :key="page"
+                    >
+                        <div
+                            class="page cursor"
+                            :class="currentPage === page ? 'active' : ''"
+                            @click="currentPage = page"
+                        >
+                            {{ page }}
+                        </div>
+                    </div>
+                    
+                    <div
+                        v-show="!disableNextButton"
+                        @click="nextPage()"
+                        class="next-page cursor"
+                        > &nbsp; ❯
+                    </div>
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -73,9 +75,9 @@ export default {
     mounted () {
         setTimeout(() => {
             if (this.getFilteredType !== null && this.getTypeOfFilter !== null) {
-            this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter, filtered: this.getFilteredType })
+                this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter, filtered: this.getFilteredType })
             } else {
-            this.ADD_ALL_FLAGS()
+                this.ADD_ALL_FLAGS()
             }
         }, 500)
         setTimeout(() => {
@@ -128,16 +130,17 @@ export default {
         },
 
         listItems () {
-            const { allFlags, currentPage, itemsPerPage } = this
+            const { getAllFlags, currentPage, itemsPerPage } = this
 
             const result = []
-            const totalPage = Math.ceil(allFlags.length / itemsPerPage)
+            const totalPage = Math.ceil(getAllFlags.length / itemsPerPage)
             let count = (currentPage * itemsPerPage) - itemsPerPage
             const delimiter = count + itemsPerPage
+
             if (currentPage <= totalPage) {
                 for (let i = count; i < delimiter; i++) {
-                    if (allFlags[i]) {
-                    result.push(allFlags[i])
+                    if (getAllFlags[i]) {
+                        result.push(getAllFlags[i])
                     }
                     count++
                 }
@@ -147,8 +150,8 @@ export default {
 
         totalPages () {
             const allFlags = []
-            for (const i in this.allFlags) {
-                allFlags.push(this.allFlags[i].flag)
+            for (const i in this.getAllFlags) {
+                allFlags.push(this.getAllFlags[i].flag)
             }
 
             const total = allFlags.length / this.itemsPerPage
@@ -175,21 +178,22 @@ export default {
             }
         },
 
-        allFlags () {
+        getAllFlags () {
             this.currentPage = 1
         }
     },
 
     methods: {
-        ...mapActions(['ADD_ALL_FLAGS', 'CHANGE_PAGINATION']),
+        ...mapActions(['ADD_ALL_FLAGS']),
 
         async changeLoadingStatus () {
             this.loading = true
             setTimeout(() => {
-            this.loading = true
+                this.loading = true
             }, 500)
+
             setTimeout(() => {
-            this.loading = false
+                this.loading = false
             }, 900)
         },
 
