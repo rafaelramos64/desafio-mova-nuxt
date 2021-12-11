@@ -1,13 +1,22 @@
 <template>
     <div>
-        <v-combobox></v-combobox>
-        <v-form-group
+        <v-combobox
+            v-if="typeOfFilter.typeValue === 'region'"
+            v-model="selectedFilteredType"
+            :label="`Escolha uma${typeOfFilter.typeText}`"
+        ></v-combobox>
+
+        <v-combobox
+            v-model="selectedFilteredType"
+            :label="`Escolha uma${typeOfFilter.typeText}`"
+        ></v-combobox>
+        <!-- <v-form-group
             :label="textTypeFiltered"
             label-for="filterByType">
             <v-form-select
                 id="filterByType"
                 @change="changeTypeFiltered()"
-                v-model="selectFilteredType"
+                v-model="selectedFilteredType"
                 >
                 <template #first>
                     <v-form-select-option selected :value="null" disabled>
@@ -56,7 +65,7 @@
                     </v-form-select-option>
                 </template>
             </v-form-select>
-        </v-form-group>
+        </v-form-group> -->
     </div>
 </template>
 
@@ -66,13 +75,13 @@ import { mapState } from 'vuex'
 export default {
     data () {
         return {
-            selectFilteredType: null,
+            selectedFilteredType: null,
             regions: [
-            { text: 'Africa', value: 'africa' },
-            { text: 'Americas', value: 'americas' },
-            { text: 'Ásia', value: 'asia' },
-            { text: 'Europa', value: 'europe' },
-            { text: 'Oceania', value: 'oceania' }
+                { text: 'Africa', value: 'africa' },
+                { text: 'Americas', value: 'americas' },
+                { text: 'Ásia', value: 'asia' },
+                { text: 'Europa', value: 'europe' },
+                { text: 'Oceania', value: 'oceania' }
             ],
             capitals: [],
             languages: [],
@@ -83,7 +92,7 @@ export default {
     },
 
     created () {
-        this.$store.state.filteredType === 'region' ? this.selectFilteredType = this.$store.selectFilteredType : this.selectFilteredType = null
+        this.$store.state.filteredType === 'region' ? this.selectedFilteredType = this.$store.selectedFilteredType : this.selectedFilteredType = null
     },
 
     mounted () {
@@ -92,7 +101,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['typeOfFilter', 'textTypeFiltered', 'filteredType', 'selectedRegionSearch'])
+        ...mapState(['typeOfFilter', 'filteredType', 'selectedRegionSearch'])
     },
 
     watch: {
@@ -113,32 +122,32 @@ export default {
 
         async changeTypeFiltered () {
             if (this.selectedRegionSearch) {
-                this.selectFilteredType = this.filteredType
+                this.selectedFilteredType = this.filteredType
                 this.$store.commit('CHANGE_SELECTED_REGION_SEARCH', false)
             }
-            if (this.typeOfFilter === 'language') {
-                this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'lang', textType: this.textTypeFiltered })
-            } else if (this.typeOfFilter === 'country') {
-                this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'name', textType: this.textTypeFiltered })
+            if (this.typeOfFilter.typeValue === 'language') {
+                this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'lang', textType: this.typeOfFilter.typeText })
+            } else if (this.typeOfFilter.typeValue === 'country') {
+                this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'name', textType: this.typeOfFilter.typeText })
             }
 
-            this.$store.commit('CHANGING_FILTERED_TYPE', this.selectFilteredType)
+            this.$store.commit('CHANGING_FILTERED_TYPE', this.selectedFilteredType)
         },
 
         async getFilters () {
-            if (this.selectFilteredType !== null) {
-                this.selectfilteredType = null
+            if (this.selectedFilteredType !== null) {
+                this.selectedfilteredType = null
             }
 
-            if (this.typeOfFilter === 'region') {
+            if (this.typeOfFilte.typeValuer === 'region') {
 
-            } else if (this.typeOfFilter === 'capital') {
+            } else if (this.typeOfFilter.typeValue === 'capital') {
                 this.getAllCapitals()
-            } else if (this.typeOfFilter === 'language' || this.typeOfFilter === 'lang') {
+            } else if (this.typeOfFilter.typeValue === 'language' || this.typeOfFilter.typeValue === 'lang') {
                 this.getAllLanguages()
-            } else if (this.typeOfFilter === 'country' || this.typeOfFilter === 'name') {
+            } else if (this.typeOfFilter.typeValue === 'country' || this.typeOfFilter.typeValue === 'name') {
                 this.getAllCountries()
-            } else if (this.typeOfFilter === 'callingcode') {
+            } else if (this.typeOfFilter.typeValue === 'callingcode') {
                 this.getAllCallingCodes()
             }
         },

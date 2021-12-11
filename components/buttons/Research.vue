@@ -1,12 +1,13 @@
 <template>
-  <div>
-    <v-button
-        :disabled="!filteredType || !typeOfFilter"
-        @click.prevent.stop="searchFlagsByType()"
-    >
-        PESQUISAR
-    </v-button>
-  </div>
+    <div>
+        <v-btn
+            class="btn"
+            :disabled="!filteredType || !typeOfFilter"
+            @click.prevent.stop="searchFlagsByType()"
+        >
+            PESQUISAR
+        </v-btn>
+    </div>
 </template>
 
 <script>
