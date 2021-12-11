@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-combobox
-            v-model="selectedFilter"
+            v-model="selectedFilterType"
             :items="filterTypes"
             label="Escolha uma opção"
         ></v-combobox>
@@ -14,7 +14,7 @@ import { mapState } from 'vuex'
 export default {
     data () {
         return {
-            selectedFilter: null,
+            selectedFilterType: null,
             filterTypes: [
                 { text: 'Região', value: 'region' },
                 { text: 'Capital', value: 'capital' },
@@ -28,8 +28,8 @@ export default {
     mounted () {
         setTimeout(() => {
             this.typeOfFilter === 'region' ?
-                this.selectedFilter = this.filterTypes[0].value :
-                this.selectedFilter = null
+                this.selectedFilterType = this.filterTypes[0].value :
+                this.selectedFilterType = null
         }, 500)
     },
 
@@ -38,25 +38,28 @@ export default {
     },
 
     watch: {
-        selectedFilter () {
+        selectedFilterType () {
             this.changeType()
         }
     },
 
     methods: {
         changeType () {
-            let typeFiltered = ''
-            let textTypeFiltered = ''
+            let typeOfFilter = [
+                { text: '' },
+                { value: ''}
+            ]
 
             for (const valueType in this.filterTypes) {
-                if (this.selectedFilter.value === this.filterTypes[valueType].value) {
-                    typeFiltered = this.filterTypes[valueType].value
-                    textTypeFiltered = this.filterTypes[valueType].text
-                    console.log(typeFiltered, textTypeFiltered)
+                if (this.selectedFilterType.value === this.filterTypes[valueType].value) {
+
+                    typeOfFilter.text = this.filterTypes[valueType].value
+                    typeOfFilter.value = this.filterTypes[valueType].text
+                    /* console.log(typeOfFilter.text, typeOfFilter.value) */
                 }
             }
 
-            this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: typeFiltered, textType: textTypeFiltered })
+            this.$store.commit('CHANGE_TYPE_OF_FILTER', { typeText: typeOfFilter.text, typeValue: typeOfFilter.value })
         }
     }
 }

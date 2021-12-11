@@ -11,10 +11,8 @@
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
-        <div>
-            <v-img v-if="$vuetify.breakpoint.xs" max-width="19" src="/images/back-small.png" alt="Voltar" />
-            <v-img v-else max-width="134" src="/images/back-big.png" alt="Voltar" />
-        </div>
+        
+        <Back />
     </v-app-bar>
 </template>
 

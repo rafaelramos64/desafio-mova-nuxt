@@ -1,6 +1,8 @@
 export const state = () => ({
-    typeOfFilter: null,
-    textTypeFiltered: '',
+    typeOfFilter: [
+        { typeText: '' },
+        { typeValue: '' }
+    ],
     filteredType: null,
     allFlags: [],
     load: 1,
@@ -11,8 +13,8 @@ export const state = () => ({
 
 export const mutations = {
     CHANGE_TYPE_OF_FILTER (state, payload) {
-        state.typeOfFilter = payload.type
-        state.textTypeFiltered = payload.textType
+        state.typeOfFilter.typeText = payload.typeText
+        state.typeOfFilter.typeValue = payload.typeValue
     },
 
     ADD_ALL_FLAGS (state, payload) {
@@ -71,5 +73,3 @@ export const actions = {
 }
 
 export const modules = {}
-
-export const getters = {}

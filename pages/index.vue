@@ -2,15 +2,15 @@
     <v-container>
         <v-row align-h="between" class="mb-3 mt-5">
             <v-col cols="12" md="3" class="first-filter ml-5 mr-auto p-0">
-                <SelectedFilterType />
+                <SelectFilterType />
             </v-col>
 
             <v-col v-show="typeOfFilter" cols="12" md="3">
-                <SelectedFilterByType />
+                <SelectByFilterType />
             </v-col>
 
             <v-col cols="12" md="3" class=" search-button ml-auto mt-2">
-                <ResearchButton/>
+                <Research/>
             </v-col>
             </v-row>
 
