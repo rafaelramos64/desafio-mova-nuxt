@@ -1,77 +1,68 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+    <v-container>
+        <v-row align-h="between" class="mb-3 mt-5">
+            <v-col sm="12" lg="3" md="3" class="first-filter ml-5 mr-auto p-0">
+                <SelectFilterType/>
+            </v-col>
+
+            <v-col v-show="typeOfFilter" sm="12" lg="3" md="3">
+                <SelectedFilterByType />
+            </v-col>
+
+            <v-col sm="12" lg="3" md="3" class=" search-button ml-auto mt-2">
+                <ResearchButton/>
+            </v-col>
+            </v-row>
+
+            <v-row align-h="center" class="mb-3">
+            <v-col cols="12">
+                <Flags />
+            </v-col>
+        </v-row> 
+    </v-container>
 </template>
+
+<script>
+/* import { mapState } from 'vuex' */
+
+export default {
+    name: 'Home',
+    data () {
+        return {
+        }
+    },
+
+    /* computed: {
+        ...mapState(['typeOfFilter', 'allFlags'])
+    } */
+}
+</script>
+
+<style lang="scss" scoped>
+
+.home {
+    padding: 100px;
+}
+
+@media screen and (max-width: 550px) {
+    .home {
+        padding: 0px 15px 0px 15px !important;
+    }
+
+    .row {
+        justify-content: center !important;
+    }
+
+    .first-filter {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 5px !important;
+        padding: 0px 15px 0px 15px !important;
+    }
+
+    .search-button {
+        text-align: right !important;
+    }
+}
+
+</style>
