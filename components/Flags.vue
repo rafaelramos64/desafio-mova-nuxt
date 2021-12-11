@@ -1,12 +1,12 @@
 <template>
-  <b-container>
+  <v-container>
     <Loader v-show="this.loading"> </Loader>
-    <b-row
+    <v-row
       v-show="!this.loading"
       align-h="center"
       class="text-center"
     >
-      <b-col
+      <v-col
         sm="12"
         lg="4"
         md="4"
@@ -15,17 +15,17 @@
         class="m-auto p-0"
       >
         <a @click="sendCountryToViewIt(flag.alpha2Code)">
-          <b-img
+          <v-img
             class="country-img mb-3"
             :src="flag.flag"
             :alt="flag.name"
-          ></b-img>
+          ></v-img>
         </a>
-      </b-col>
-    </b-row>
+      </v-col>
+    </v-row>
 
-    <b-row v-show="listItems.length > 2" class="mt-3">
-      <b-col>
+    <v-row v-show="listItems.length > 2" class="mt-3">
+      <v-col>
         <div class="pagination">
           <div
             v-show="!disablePrevButton"
@@ -51,13 +51,13 @@
             > &nbsp; ❯
           </div>
         </div>
-      </b-col>
-    </b-row>
-  </b-container>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-/* import { mapState, mapMutations, mapActions } from 'vuex' */
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
     data () {
@@ -84,7 +84,7 @@ export default {
     },
 
     computed: {
-       /*  ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow']), */
+        ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow']),
 
         allowList () {
             const { totalPages } = this

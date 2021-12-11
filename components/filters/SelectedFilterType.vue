@@ -23,7 +23,7 @@
 </template>
 
 <script>
-/* import { mapState } from 'vuex' */
+import { mapState } from 'vuex'
 
 export default {
     data () {
@@ -47,9 +47,9 @@ export default {
         }, 500)
     },
 
-    /* computed: {
+    computed: {
         ...mapState(['typeOfFilter'])
-    }, */
+    },
 
     watch: {
         selectedFilter () {
@@ -69,7 +69,7 @@ export default {
                 }
             }
 
-            /* this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: typeFiltered, textType: textTypeFiltered }) */
+            this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: typeFiltered, textType: textTypeFiltered })
         }
     }
 }

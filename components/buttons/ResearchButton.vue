@@ -10,11 +10,11 @@
 </template>
 
 <script>
-/* import { mapState } from 'vuex' */
+import { mapState } from 'vuex'
 
 export default {
 
-    /* computed: mapState(['typeOfFilter', 'filteredType']), */
+    computed: mapState(['typeOfFilter', 'filteredType']),
 
     methods: {
         async searchFlagsByType () {
@@ -26,11 +26,10 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
-$border-button: #6D2080;
+<style scoped>
 
 .btn {
-    background-color: $border-button;
+    background-color: #6D2080;
     color: #fff;
     border-radius: 10px;
     min-width: 156px;
@@ -41,7 +40,7 @@ $border-button: #6D2080;
 .btn:hover, .btn:focus {
     cursor: pointer !important;
     color: #fff;
-    background-color: $border-button;
+    background-color: #6D2080;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {

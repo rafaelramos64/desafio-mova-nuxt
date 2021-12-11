@@ -28,6 +28,9 @@ export default {
   components: {
     dirs: [
       '~/components/',
+      '~/components/buttons',
+      '~/components/filters',
+      '~/components/app'
     ]
   },
 
