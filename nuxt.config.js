@@ -57,7 +57,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'https://restcountries.com/#api-endpoints-code',
+    baseURL: 'https://restcountries.com/v2',
   },
 
   publicRuntimeConfig: {

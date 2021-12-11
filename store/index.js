@@ -83,6 +83,7 @@ export const actions = {
 
         try {
         const { data } = await this.$axios.get(params)
+        console.log(data)
 
         for (const i in data) {
             filteredFlags.push(data[i])

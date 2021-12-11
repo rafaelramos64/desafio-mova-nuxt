@@ -63,7 +63,6 @@ export default {
 
                     typeOfFilter.text = this.filterTypes[valueType].text
                     typeOfFilter.value = this.filterTypes[valueType].value
-                    /* console.log(typeOfFilter.text, typeOfFilter.value) */
                 }
             }
 
