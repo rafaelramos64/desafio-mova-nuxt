@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data () {
@@ -72,10 +72,10 @@ export default {
 
     mounted () {
         setTimeout(() => {
-            if (this.$store.state.filteredType !== null && this.$store.state.typeOfFilter !== null) {
-            this.GET_FLAGS({ type: this.typeOfFilter, filtered: this.filteredType })
+            if (this.getFilteredType !== null && this.getTypeOfFilter !== null) {
+            this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter, filtered: this.getFilteredType })
             } else {
-            this.GET_FLAGS()
+            this.ADD_ALL_FLAGS()
             }
         }, 500)
         setTimeout(() => {
@@ -84,7 +84,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow']),
+        ...mapGetters(['getAllFlags', 'getLoad', 'getTypeOfFilter', 'getFilteredType', 'getItemsToShow']),
 
         allowList () {
             const { totalPages } = this
@@ -181,8 +181,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['GET_FLAGS']),
-        ...mapMutations(['CHANGE_PAGINATION']),
+        /* ...mapActions(['ADD_ALL_FLAGS', 'CHANGE_PAGINATION']), */
 
         async changeLoadingStatus () {
             this.loading = true
@@ -206,7 +205,7 @@ export default {
 
         async sendCountryToViewIt (alphaCode) {
             setTimeout(() => {
-                this.GET_FLAGS({ type: 'alpha', filtered: alphaCode })
+                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode })
             }, 1000)
             
             this.$router.push({ name: 'Country', params: { alpha: alphaCode } })

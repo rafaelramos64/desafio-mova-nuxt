@@ -5,7 +5,7 @@
                 <SelectFilterType />
             </v-col>
 
-            <v-col v-show="typeOfFilter" cols="12" md="3">
+            <v-col v-show="getTypeOfFilter.typeValue !== ''" cols="12" md="3">
                 <SelectByFilterType />
             </v-col>
 
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     name: 'Home',
@@ -33,7 +33,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['typeOfFilter', 'allFlags'])
+        ...mapGetters(['getTypeOfFilter', 'getAllFlags'])
     }
 }
 </script>
