@@ -22,7 +22,6 @@
                 </a>
             </v-col>
         </v-row>
-
         <v-row v-show="listItems.length > 2" class="mt-3">
             <v-col>
                 <div class="pagination d-flex justify-center">
@@ -266,5 +265,19 @@ div .active {
 
 .pagination :hover:not(.active) {
     background-color: #ddd;
+}
+
+@media screen and (max-width: 550px) {
+    .country-img, .flag {
+        width: 100% !important;
+    }
+}
+
+.country-img {
+    width: 316px;
+    height: 181px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 0;
+    object-fit: contain;
 }
 </style>
