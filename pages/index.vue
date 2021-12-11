@@ -1,16 +1,16 @@
 <template>
     <v-container>
         <v-row align-h="between" class="mb-3 mt-5">
-            <v-col sm="12" lg="3" md="3" class="first-filter ml-5 mr-auto p-0">
-                <!-- <SelectedFilterType/> -->
+            <v-col cols="12" md="3" class="first-filter ml-5 mr-auto p-0">
+                <SelectedFilterType />
             </v-col>
 
-            <v-col v-show="typeOfFilter" sm="12" lg="3" md="3">
-                <!-- <SelectedFilterByType /> -->
+            <v-col v-show="typeOfFilter" cols="12" md="3">
+                <SelectedFilterByType />
             </v-col>
 
-            <v-col sm="12" lg="3" md="3" class=" search-button ml-auto mt-2">
-                <!-- <ResearchButton/> -->
+            <v-col cols="12" md="3" class=" search-button ml-auto mt-2">
+                <ResearchButton/>
             </v-col>
             </v-row>
 

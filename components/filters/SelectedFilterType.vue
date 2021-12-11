@@ -1,24 +1,10 @@
 <template>
     <div>
-        <v-form-group
-            label="Filtrar por"
-            label-for="select">
-            <v-form-select
-                @change="changeType() "
-                id="select"
-                v-model="selectedFilter"
-                :options="filterTypes"
-            >
-                <template #first>
-                    <v-form-select-option
-                        :value="null"
-                        disabled
-                    >
-                        Escolha uma opção   
-                    </v-form-select-option>
-                </template>
-            </v-form-select>
-        </v-form-group>
+        <v-combobox
+            v-model="selectedFilter"
+            :items="filterTypes"
+            label="Escolha uma opção"
+        ></v-combobox>
     </div>
 </template>
 
@@ -53,19 +39,20 @@ export default {
 
     watch: {
         selectedFilter () {
-        this.changeType()
+            this.changeType()
         }
     },
 
     methods: {
-        async changeType () {
+        changeType () {
             let typeFiltered = ''
             let textTypeFiltered = ''
 
             for (const valueType in this.filterTypes) {
-                if (this.selectedFilter === this.filterTypes[valueType].value) {
+                if (this.selectedFilter.value === this.filterTypes[valueType].value) {
                     typeFiltered = this.filterTypes[valueType].value
                     textTypeFiltered = this.filterTypes[valueType].text
+                    console.log(typeFiltered, textTypeFiltered)
                 }
             }
 

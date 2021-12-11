@@ -1,7 +1,10 @@
 <template>
     <div>
-        <v-combobox></v-combobox>
-        <v-form-group
+        <v-combobox
+            v-model="selectFilteredType"
+            :label="`Escolha uma${textTypeFiltered}`"
+        ></v-combobox>
+        <!-- <v-form-group
             :label="textTypeFiltered"
             label-for="filterByType">
             <v-form-select
@@ -56,7 +59,7 @@
                     </v-form-select-option>
                 </template>
             </v-form-select>
-        </v-form-group>
+        </v-form-group> -->
     </div>
 </template>
 
@@ -68,11 +71,11 @@ export default {
         return {
             selectFilteredType: null,
             regions: [
-            { text: 'Africa', value: 'africa' },
-            { text: 'Americas', value: 'americas' },
-            { text: 'Ásia', value: 'asia' },
-            { text: 'Europa', value: 'europe' },
-            { text: 'Oceania', value: 'oceania' }
+                { text: 'Africa', value: 'africa' },
+                { text: 'Americas', value: 'americas' },
+                { text: 'Ásia', value: 'asia' },
+                { text: 'Europa', value: 'europe' },
+                { text: 'Oceania', value: 'oceania' }
             ],
             capitals: [],
             languages: [],
