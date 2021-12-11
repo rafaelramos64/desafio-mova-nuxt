@@ -73,9 +73,9 @@ export default {
     mounted () {
         setTimeout(() => {
             if (this.$store.state.filteredType !== null && this.$store.state.typeOfFilter !== null) {
-            this.GET_FLAGS({ type: this.typeOfFilter, filtered: this.filteredType })
+            this.ADD_ALL_FLAGS({ type: this.typeOfFilter, filtered: this.filteredType })
             } else {
-            this.GET_FLAGS()
+            this.ADD_ALL_FLAGS()
             }
         }, 500)
         setTimeout(() => {
@@ -181,7 +181,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['GET_FLAGS']),
+        ...mapActions(['ADD_ALL_FLAGS']),
         ...mapMutations(['CHANGE_PAGINATION']),
 
         async changeLoadingStatus () {
@@ -206,7 +206,7 @@ export default {
 
         async sendCountryToViewIt (alphaCode) {
             setTimeout(() => {
-                this.GET_FLAGS({ type: 'alpha', filtered: alphaCode })
+                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode })
             }, 1000)
             
             this.$router.push({ name: 'Country', params: { alpha: alphaCode } })

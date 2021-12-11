@@ -1,8 +1,8 @@
 export const state = () => ({
-    typeOfFilter: [
-        { typeText: '' },
-        { typeValue: '' }
-    ],
+    typeOfFilter: {
+        typeText: '',
+        typeValue: ''
+    },
     filteredType: null,
     allFlags: [],
     load: 1,
@@ -42,28 +42,28 @@ export const getters = {
 }
 
 export const mutations = {
-    CHANGE_TYPE_OF_FILTER (state, payload) {
+    change_type_of_filter (state, payload) {
         state.typeOfFilter.typeText = payload.typeText
         state.typeOfFilter.typeValue = payload.typeValue
     },
 
-    ADD_ALL_FLAGS (state, payload) {
+    add_all_flags (state, payload) {
         state.allFlags = payload
     },
 
-    CHANGING_FILTERED_TYPE (state, payload) {
+    changing_filtered_type (state, payload) {
         state.filteredType = payload
     },
 
-    CHANGE_LOADER (state, payload) {
+    change_loader (state) {
         state.load += 1
     },
 
-    ADD_BORDERS (state, payload) {
+    add_borders(state, payload) {
         state.borders = payload
     },
 
-    CHANGE_SELECTED_REGION_SEARCH (state, payload) {
+    change_selected_region_search (state, payload) {
         state.selectedRegionSearch = payload
     },
 
@@ -73,7 +73,11 @@ export const mutations = {
 }
 
 export const actions = {
-    async GET_FLAGS (context, payload) {
+    CHANGE_TYPE_OF_FILTER (context, payload) {
+        context.commit('change_type_of_filter', payload)
+    },
+
+    async ADD_ALL_FLAGS (context, payload) {
         const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
         const filteredFlags = []
 
@@ -84,10 +88,26 @@ export const actions = {
             filteredFlags.push(data[i])
         }
 
-        context.commit('ADD_ALL_FLAGS', filteredFlags)
+        context.commit('add_all_flags', filteredFlags)
         } catch (err) {
         console.error(err)
         }
+    },
+
+    CHANGING_FILTERED_TYPE (context, payload) {
+        context.commit('changing_filtered_type', payload)
+    },
+
+    CHANGE_LOADER (context) {
+        context.commit('change_loader')
+    },
+
+    ADD_BORDERS (context, payload) {
+        context.commit('add_borders')
+    },
+
+    CHANGE_SELECTED_REGION_SEARCH (context, payload) {
+        context.commit('change_selected_region_search')
     },
 
     async GET_BORDERS (context, payload) {

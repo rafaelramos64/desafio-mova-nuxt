@@ -11,16 +11,20 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 
-    computed: mapState(['typeOfFilter', 'filteredType']),
+    computed: {
+        ...mapGetters(['typeOfFilter', 'filteredType'])
+    },
 
     methods: {
+        ...mapActions(['CHANGE_LOADER', 'ADD_ALL_FLAGS']),
+
         async searchFlagsByType () {
-            this.$store.dispatch('GET_FLAGS', { type: this.typeOfFilter, filtered: this.filteredType })
-            this.$store.commit('CHANGE_LOADER')
+            this.ADD_ALL_FLAGS({ type: this.typeOfFilter.typeValue, filtered: this.filteredType })
+            this.CHANGE_LOADER()
         }
     }
 }
