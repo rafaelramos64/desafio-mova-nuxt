@@ -3,7 +3,8 @@
         <v-combobox
             v-model="selectedFilterType"
             :items="filterTypes"
-            label="Escolha uma opção"
+            :label="wasClicked ? 'Filtrar por' : 'Escolha uma opção'"
+            @click="verifyClickEvent()"
         ></v-combobox>
     </div>
 </template>
@@ -21,20 +22,21 @@ export default {
                 { text: 'Língua', value: 'language' },
                 { text: 'País', value: 'country' },
                 { text: 'Código de ligação', value: 'callingcode' }
-            ]
+            ],
+            wasClicked: false
         }
     },
 
     mounted () {
         setTimeout(() => {
-            this.typeOfFilter === 'region' ?
+            this.getTypeOfFilter === 'region' ?
                 this.selectedFilterType = this.filterTypes[0].value :
                 this.selectedFilterType = null
         }, 500)
     },
 
     computed: {
-        ...mapGetters(['typeOfFilter'])
+        ...mapGetters(['getTypeOfFilter'])
     },
 
     watch: {
@@ -45,6 +47,10 @@ export default {
 
     methods: {
         ...mapActions(['CHANGE_TYPE_OF_FILTER']),
+
+        verifyClickEvent () {
+            this.wasClicked = true
+        },
 
         changeType () {
             let typeOfFilter = [

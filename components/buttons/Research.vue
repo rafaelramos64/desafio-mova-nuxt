@@ -2,7 +2,7 @@
     <div>
         <v-btn
             class="btn"
-            :disabled="!filteredType || !typeOfFilter"
+            :disabled="!getFilteredType || !getTypeOfFilter"
             @click.prevent.stop="searchFlagsByType()"
         >
             PESQUISAR
@@ -16,14 +16,14 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
 
     computed: {
-        ...mapGetters(['typeOfFilter', 'filteredType'])
+        ...mapGetters(['getTypeOfFilter', 'getFilteredType'])
     },
 
     methods: {
         ...mapActions(['CHANGE_LOADER', 'ADD_ALL_FLAGS']),
 
         async searchFlagsByType () {
-            this.ADD_ALL_FLAGS({ type: this.typeOfFilter.typeValue, filtered: this.filteredType })
+            this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter.typeValue, filtered: this.getFilteredType })
             this.CHANGE_LOADER()
         }
     }

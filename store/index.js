@@ -8,7 +8,7 @@ export const state = () => ({
     load: 1,
     borders: [],
     selectedRegionSearch: null,
-    itemsToShow: []
+    /* itemsToShow: [] */
 })
 
 export const getters = {
@@ -67,9 +67,9 @@ export const mutations = {
         state.selectedRegionSearch = payload
     },
 
-    CHANGE_PAGINATION (state, payload) {
+    /* change_pagination (state, payload) {
         state.itemsToShow = payload
-    }
+    } */
 }
 
 export const actions = {
@@ -99,18 +99,10 @@ export const actions = {
     },
 
     CHANGE_LOADER (context) {
-        context.commit('change_loader')
+        context.commit('change_loader',payload)
     },
 
-    ADD_BORDERS (context, payload) {
-        context.commit('add_borders')
-    },
-
-    CHANGE_SELECTED_REGION_SEARCH (context, payload) {
-        context.commit('change_selected_region_search')
-    },
-
-    async GET_BORDERS (context, payload) {
+    async ADD_BORDERS (context, payload) {
         const border = []
         const alpha = 'alpha'
 
@@ -118,8 +110,16 @@ export const actions = {
         const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
         border.push(data)
         }
-        context.commit('ADD_BORDERS', border)
-    }
+        context.commit('add_borders', border)
+    },
+
+    CHANGE_SELECTED_REGION_SEARCH (context, payload) {
+        context.commit('change_selected_region_search', payload)
+    },
+
+    /* CHANGE_PAGINATION (context, payload) {
+        context.commit('change_pagination', payload)
+    }, */
 }
 
 export const modules = {}

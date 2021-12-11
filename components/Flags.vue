@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data () {
@@ -72,8 +72,8 @@ export default {
 
     mounted () {
         setTimeout(() => {
-            if (this.$store.state.filteredType !== null && this.$store.state.typeOfFilter !== null) {
-            this.ADD_ALL_FLAGS({ type: this.typeOfFilter, filtered: this.filteredType })
+            if (this.getFilteredType !== null && this.getTypeOfFilter !== null) {
+            this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter, filtered: this.getFilteredType })
             } else {
             this.ADD_ALL_FLAGS()
             }
@@ -84,7 +84,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow']),
+        ...mapGetters(['getAllFlags', 'getLoad', 'getTypeOfFilter', 'getFilteredType', 'getItemsToShow']),
 
         allowList () {
             const { totalPages } = this
@@ -181,8 +181,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(['ADD_ALL_FLAGS']),
-        ...mapMutations(['CHANGE_PAGINATION']),
+        /* ...mapActions(['ADD_ALL_FLAGS', 'CHANGE_PAGINATION']), */
 
         async changeLoadingStatus () {
             this.loading = true
