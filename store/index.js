@@ -11,6 +11,36 @@ export const state = () => ({
     itemsToShow: []
 })
 
+export const getters = {
+    getTypeOfFilter (state) {
+        return state.typeOfFilter
+    },
+
+    getFilteredType (state) {
+        return state.filteredType
+    },
+
+    getAllFlags (state) {
+        return state.allFlags
+    },
+
+    getLoad (state) {
+        return state.load
+    },
+
+    getBorders (state) {
+        return state.borders
+    },
+
+    getSelectedRegionSearch (state) {
+        return state.selectedRegionSearch
+    },
+
+    getItemsToShow (state) {
+        return state.itemsToShow
+    }
+}
+
 export const mutations = {
     CHANGE_TYPE_OF_FILTER (state, payload) {
         state.typeOfFilter.typeText = payload.typeText
