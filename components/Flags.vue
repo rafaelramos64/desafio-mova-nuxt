@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data () {
@@ -181,7 +181,7 @@ export default {
     },
 
     methods: {
-        /* ...mapActions(['ADD_ALL_FLAGS', 'CHANGE_PAGINATION']), */
+        ...mapActions(['ADD_ALL_FLAGS', 'CHANGE_PAGINATION']),
 
         async changeLoadingStatus () {
             this.loading = true

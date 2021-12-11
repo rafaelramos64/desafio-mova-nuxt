@@ -16,7 +16,7 @@
 
             <v-row align-h="center" class="mb-3">
             <v-col cols="12">
-                <!-- <Flags /> -->
+                <Flags />
             </v-col>
         </v-row> 
     </v-container>
