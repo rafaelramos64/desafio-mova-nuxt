@@ -5,11 +5,10 @@
             v-model="selectedFilteredType"
             :label="`Escolha um(a) ${getTypeOfFilter.typeText}`"
         ></v-combobox> -->
-
+            {{ getTypeOfFilter }}
         <v-combobox
             v-model="selectedFilteredType"
-            :label="wasClicked ? getTypeOfFilter.typeText : `Escolha um(a) ${getTypeOfFilter.typeText}`"
-            @click="verifyClickEvent()"
+            :label="`Escolha um(a) ${getTypeOfFilter.typeText}`"
         ></v-combobox>
         <!-- <v-form-group
             :label="textTypeFiltered"
@@ -89,14 +88,13 @@ export default {
             countries: [],
             callingCodes: [],
             allCountries: [],
-            wasClicked: false,
         }
     },
 
     created () {
-        this.getTypeOfFilter.typeValue === 'region' ?
+        /* this.getTypeOfFilter.typeValue === 'region' ?
             this.selectedFilteredType = this.getTypeOfFilter.textValue :
-                this.selectedFilteredType = null
+                this.selectedFilteredType = null */
     },
 
     mounted () {
@@ -120,10 +118,6 @@ export default {
 
     methods: {
         ...mapActions(['CHANGING_FILTERED_TYPE', 'CHANGE_TYPE_OF_FILTER', 'CHANGE_SELECTED_REGION_SEARCH']),
-
-        verifyClickEvent () {
-            this.wasClicked = true
-        },
 
         async getCountries () {
             const { data } = await this.$axios.get('/all')

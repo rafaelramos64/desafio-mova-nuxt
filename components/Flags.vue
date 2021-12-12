@@ -17,8 +17,22 @@
                     <v-img
                         class="country-img mb-3"
                         :src="flag.flag"
+                        :lazy-src="flag.flag"
                         :alt="flag.name"
-                    ></v-img>
+                    >
+                        <template v-slot:placeholder>
+                            <v-row
+                                class="fill-height ma-0"
+                                align="center"
+                                justify="center"
+                            >
+                                <v-progress-circular
+                                    indeterminate
+                                    color="grey lighten-5"
+                                ></v-progress-circular>
+                            </v-row>
+                        </template>
+                    </v-img>
                 </a>
             </v-col>
         </v-row>
@@ -65,7 +79,7 @@ export default {
         return {
             loading: true,
             currentPage: 1,
-            itemsPerPage: 12,
+            itemsPerPage: 9,
             disablePrevButton: false,
             disableNextButton: false
         }

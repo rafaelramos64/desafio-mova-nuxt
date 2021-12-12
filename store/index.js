@@ -1,7 +1,7 @@
 export const state = () => ({
     typeOfFilter: {
-        typeText: '',
-        typeValue: ''
+        typeText: 'País',
+        typeValue: 'country'
     },
     filteredType: null,
     allFlags: [],

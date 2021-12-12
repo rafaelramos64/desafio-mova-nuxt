@@ -12,9 +12,9 @@
             <v-col cols="12" md="3" class=" search-button ml-auto mt-2">
                 <Research/>
             </v-col>
-            </v-row>
+        </v-row>
 
-            <v-row align-h="center" class="mb-3">
+        <v-row align-h="center" class="mb-3">
             <v-col cols="12">
                 <Flags />
             </v-col>
