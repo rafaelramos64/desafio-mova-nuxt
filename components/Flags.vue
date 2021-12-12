@@ -3,15 +3,16 @@
         <Loader v-show="this.loading"> </Loader>
         <v-row
             v-show="!this.loading"
-            align-h="center"
+            justify="center"
             class="text-center"
             >
             <v-col
-                sm="12"
+                cols="12"
+                sm="6"
                 md="4"
                 v-for="flag in listItems"
                 :key="flag.alpha2Code"
-                class="m-auto p-0"
+                class="d-flex justify-center align-centerz p-0"
             >
                 <a @click="sendCountryToViewIt(flag.alpha2Code)">
                     <v-tooltip top color="secondary">
@@ -32,7 +33,7 @@
                                     >
                                         <v-progress-circular
                                             indeterminate
-                                            color="grey lighten-5"
+                                            color="primary lighten-2"
                                         ></v-progress-circular>
                                     </v-row>
                                 </template>
