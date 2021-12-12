@@ -14,25 +14,32 @@
                 class="m-auto p-0"
             >
                 <a @click="sendCountryToViewIt(flag.alpha2Code)">
-                    <v-img
-                        class="country-img mb-3"
-                        :src="flag.flag"
-                        :lazy-src="flag.flag"
-                        :alt="flag.name"
-                    >
-                        <template v-slot:placeholder>
-                            <v-row
-                                class="fill-height ma-0"
-                                align="center"
-                                justify="center"
+                    <v-tooltip top color="secondary">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-img
+                                class="country-img mb-3"
+                                :src="flag.flag"
+                                :lazy-src="flag.flag"
+                                :alt="flag.name"
+                                v-bind="attrs"
+                                v-on="on"
                             >
-                                <v-progress-circular
-                                    indeterminate
-                                    color="grey lighten-5"
-                                ></v-progress-circular>
-                            </v-row>
+                                <template v-slot:placeholder>
+                                    <v-row
+                                        class="fill-height ma-0"
+                                        align="center"
+                                        justify="center"
+                                    >
+                                        <v-progress-circular
+                                            indeterminate
+                                            color="grey lighten-5"
+                                        ></v-progress-circular>
+                                    </v-row>
+                                </template>
+                            </v-img>
                         </template>
-                    </v-img>
+                        <span>{{ flag.name }}</span>
+                    </v-tooltip>
                 </a>
             </v-col>
         </v-row>

@@ -1,24 +1,25 @@
 <template>
     <div>
-        <v-img
-            v-if="$vuetify.breakpoint.xs"
-            class="back-mobile"
-            max-width="25"
-            src="/images/back-small.png"
-            alt="Voltar" />
+        <NuxtLink to="/">
+            <v-img
+                v-if="$vuetify.breakpoint.xs"
+                class="back-mobile"
+                max-width="25"
+                src="/images/back-small.png"
+                alt="Voltar" />
 
-        <v-btn
-            v-else
-            class="back"
-            width="134"
-            height="36"
-            tile
-            elevation="0"
-            @click.prevent.stop=""
-        >
-            <v-img class="mr-3" max-width="24" src="/images/back-small.png" alt="Voltar" />
-            Voltar
-        </v-btn>
+            <v-btn
+                v-else
+                class="back"
+                width="134"
+                height="36"
+                tile
+                elevation="0"
+            >
+                <v-img class="mr-3" max-width="24" src="/images/back-small.png" alt="Voltar" />
+                Voltar
+            </v-btn>
+        </NuxtLink>
     </div>
 </template>
 
@@ -33,5 +34,9 @@
 
 .back-mobile {
     cursor: pointer;
+}
+
+a {
+    text-decoration: none;
 }
 </style>

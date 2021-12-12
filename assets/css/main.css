@@ -21,7 +21,8 @@ body {
   left: 0;
   width: 100%;
   border-radius: 4px;
-  background: #6D2080;
+  /* background: #6D2080; */
+  background-color: #02AE99;
   opacity: 0;
   cursor: default;
   outline: none;

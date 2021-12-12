@@ -27,7 +27,8 @@
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: rgba(0, 0, 0, 0.5);
+    background: #02AE99;
+    /* background: #6D2080; */
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 

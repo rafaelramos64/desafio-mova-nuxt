@@ -25,14 +25,6 @@ export default {
         }
     },
 
-    mounted () {
-        /* setTimeout(() => {
-            this.getTypeOfFilter === 'region' ?
-                this.selectedFilterType = this.filterTypes[0].value :
-                this.selectedFilterType = null
-        }, 500) */
-    },
-
     computed: {
         ...mapGetters(['getTypeOfFilter'])
     },

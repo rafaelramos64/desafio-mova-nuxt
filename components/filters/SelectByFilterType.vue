@@ -1,71 +1,10 @@
 <template>
     <div>
-        <!-- <v-combobox
-            v-if="getTypeOfFilter.typeValue === 'region'"
-            v-model="selectedFilteredType"
-            :label="`Escolha um(a) ${getTypeOfFilter.typeText}`"
-        ></v-combobox> -->
-            {{ getTypeOfFilter }}
         <v-combobox
             v-model="selectedFilteredType"
             :label="`Escolha um(a) ${getTypeOfFilter.typeText}`"
+            :items="capitals"
         ></v-combobox>
-        <!-- <v-form-group
-            :label="textTypeFiltered"
-            label-for="filterByType">
-            <v-form-select
-                id="filterByType"
-                @change="changeTypeFiltered()"
-                v-model="selectedFilteredType"
-                >
-                <template #first>
-                    <v-form-select-option selected :value="null" disabled>
-                        Escolha uma {{ textTypeFiltered }}
-                    </v-form-select-option>
-                </template>
-
-                <template v-if="this.getTypeOfFilter === 'region'">
-                    <v-form-select-option
-                        v-for="(region, index) in regions" :key="index" :value="region.value"
-                        >
-                        {{ region.text }}
-                    </v-form-select-option>
-                </template>
-
-                <template v-if="this.getTypeOfFilter === 'capital'">
-                    <v-form-select-option
-                        v-for="(capital, index) in capitals" :key="index" :value="capital"
-                        >
-                        {{ capital }}
-                    </v-form-select-option>
-                </template>
-
-                <template v-if="this.getTypeOfFilter === 'language' || this.getTypeOfFilter === 'lang'">
-                    <v-form-select-option
-                        v-for="(lang, index) in languages" :key="index" :value="lang.iso639_1"
-                        >
-                        {{ lang.name }}
-                    </v-form-select-option>
-                </template>
-
-                <template v-if="this.getTypeOfFilter === 'country' || this.getTypeOfFilter === 'name'"
-                >
-                    <v-form-select-option
-                        v-for="(country, index) in countries" :key="index" :value="country"
-                    >
-                        {{ country }}
-                    </v-form-select-option>
-                </template>
-
-                <template v-if="this.getTypeOfFilter === 'callingcode'">
-                    <v-form-select-option
-                        v-for="(code, index) in callingCodes" :key="index" :value="code"
-                    >
-                        {{ code }}
-                    </v-form-select-option>
-                </template>
-            </v-form-select>
-        </v-form-group> -->
     </div>
 </template>
 
@@ -91,15 +30,9 @@ export default {
         }
     },
 
-    created () {
-        /* this.getTypeOfFilter.typeValue === 'region' ?
-            this.selectedFilteredType = this.getTypeOfFilter.textValue :
-                this.selectedFilteredType = null */
-    },
-
     mounted () {
         this.getCountries()
-        this.changeTypeFiltered()
+        /* this.changeTypeFiltered() */
     },
 
     computed: {
@@ -107,38 +40,41 @@ export default {
     },
 
     watch: {
-        getTypeOfFilter () {
-            this.getFilters()
+        getTypeOfFilter: {
+            deep: true,
+            handler () {
+                this.getFilters()
+            },
         },
 
         getFilteredType () {
             this.changeTypeFiltered()
-        }
+        },
     },
 
     methods: {
-        ...mapActions(['CHANGING_FILTERED_TYPE', 'CHANGE_TYPE_OF_FILTER', 'CHANGE_SELECTED_REGION_SEARCH']),
+        ...mapActions(['CHANGE_FILTERED_TYPE', 'CHANGE_TYPE_OF_FILTER', 'CHANGE_SELECTED_REGION_SEARCH']),
 
-        async getCountries () {
+        async getCountries () { 
             const { data } = await this.$axios.get('/all')
             this.allCountries = data
         },
 
-        async changeTypeFiltered () {
-            if (this.selectedRegionSearch) {
+        changeTypeFiltered () {
+            if (this.getSelectedRegionSearch) {
                 this.selectedFilteredType = this.getFilteredType
                 this.CHANGE_SELECTED_REGION_SEARCH(false)
             }
             if (this.getTypeOfFilter.typeValue === 'language') {
-                this.this.CHANGE_TYPE_OF_FILTER({ type: 'lang', textType: this.getTypeOfFilter.typeText })
+                this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText, typeValue: 'lang' })
             } else if (this.getTypeOfFilter.typeValue === 'country') {
-                this.CHANGE_TYPE_OF_FILTER({ type: 'name', textType: this.getTypeOfFilter.typeText })
+                this.CHANGE_TYPE_OF_FILTER({ typeValue: 'name', typeText: this.getTypeOfFilter.typeText })
             }
 
-            this.CHANGING_FILTERED_TYPE(this.selectedFilteredType)
+            this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
         },
 
-        async getFilters () {
+        getFilters () {
             if (this.selectedFilteredType !== null) {
                 this.selectedfilteredType = null
             }
@@ -156,16 +92,16 @@ export default {
             }
         },
 
-        async getAllCapitals () {
+        getAllCapitals () {
             const allCapitals = []
 
             for (const i in this.allCountries) {
                 allCapitals.push(this.allCountries[i].capital)
             }
-                this.capitals = allCapitals.filter(item => item !== '')
+            this.capitals = allCapitals.filter(item => item !== '' && item !== null && item !== undefined)
         },
 
-        async getAllLanguages () {
+        getAllLanguages () {
             let allLanguages = []
 
             for (const langs of this.allCountries) {
@@ -184,14 +120,14 @@ export default {
             this.languages = unikLanguages
         },
 
-        async getAllCountries () {
+        getAllCountries () {
             for (const country in this.allCountries) {
                 this.countries.push(this.allCountries[country].name)
             }
             this.countries = this.countries.filter(item => item !== '')
         },
 
-        async getAllCallingCodes () {
+        agetAllCallingCodes () {
             for (const codes in this.allCountries) {
                 this.callingCodes.push(this.allCountries[codes].callingCodes[0])
             }
@@ -206,3 +142,7 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+</style>
