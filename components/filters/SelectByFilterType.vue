@@ -3,7 +3,7 @@
         <v-combobox
             v-model="selectedFilteredType"
             :label="`Escolha um(a) ${getTypeOfFilter.typeText}`"
-            :items="capitals"
+            :items="filteredTypesList"
         ></v-combobox>
     </div>
 </template>
@@ -22,11 +22,7 @@ export default {
                 { text: 'Europa', value: 'europe' },
                 { text: 'Oceania', value: 'oceania' }
             ],
-            capitals: [],
-            languages: [],
-            countries: [],
-            callingCodes: [],
-            allCountries: [],
+            filteredTypesList: []
         }
     },
 
@@ -75,12 +71,10 @@ export default {
         },
 
         getFilters () {
-            if (this.selectedFilteredType !== null) {
-                this.selectedfilteredType = null
-            }
+            this.selectedFilteredType = null
 
             if (this.getTypeOfFilter.typeValue === 'region') {
-
+                this.filteredTypesList = this.regions
             } else if (this.getTypeOfFilter.typeValue === 'capital') {
                 this.getAllCapitals()
             } else if (this.getTypeOfFilter.typeValue === 'language' || this.getTypeOfFilter.typeValue === 'lang') {
@@ -98,46 +92,54 @@ export default {
             for (const i in this.allCountries) {
                 allCapitals.push(this.allCountries[i].capital)
             }
-            this.capitals = allCapitals.filter(item => item !== '' && item !== null && item !== undefined)
+            this.filteredTypesList = allCapitals.filter(
+                item => item !== '' && item !== null && item !== undefined
+            )
         },
 
         getAllLanguages () {
             let allLanguages = []
 
-            for (const langs of this.allCountries) {
-                allLanguages.push(langs.languages)
+            for (const country of this.allCountries) {
+                allLanguages.push(country.languages)
             }
 
             allLanguages = allLanguages.flat(Infinity)
             const unikLanguages = []
 
-            for (const i of allLanguages) {
-                const languageExist = unikLanguages.find(elem => elem.name === i.name)
+            for (const lang of allLanguages) {
+                const languageExist = unikLanguages.find(elem => elem.name === lang.name)
                 if (!languageExist) {
-                    unikLanguages.push(i)
+                    unikLanguages.push(lang.name)
                 }
             }
-            this.languages = unikLanguages
+            this.filteredTypesList = unikLanguages
         },
 
         getAllCountries () {
+            const countries = []
+
             for (const country in this.allCountries) {
-                this.countries.push(this.allCountries[country].name)
+                countries.push(this.allCountries[country].name)
             }
-            this.countries = this.countries.filter(item => item !== '')
+            this.filteredTypesList = countries.filter(item => item !== '')
         },
 
-        agetAllCallingCodes () {
+        getAllCallingCodes () {
+            let callingCodes = []
+
             for (const codes in this.allCountries) {
-                this.callingCodes.push(this.allCountries[codes].callingCodes[0])
+                callingCodes.push(this.allCountries[codes].callingCodes[0])
             }
-            this.callingCodes = this.callingCodes.filter(item => item !== '')
+
+            callingCodes = callingCodes.filter(item => item !== '')
             const unikCallingCodes = new Set()
 
-            this.callingCodes.forEach((item) => {
+            callingCodes.forEach((item) => {
                 unikCallingCodes.add(item)
             })
-            this.callingCodes = [...unikCallingCodes.values()]
+
+            this.filteredTypesList = [...unikCallingCodes.values()]
         }
     }
 }
