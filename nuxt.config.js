@@ -37,7 +37,8 @@ export default {
       '~/components/',
       '~/components/buttons',
       '~/components/filters',
-      '~/components/app'
+      '~/components/app',
+      '~/components/country'
     ]
   },
 
