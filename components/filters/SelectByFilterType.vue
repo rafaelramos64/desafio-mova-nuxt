@@ -43,7 +43,7 @@ export default {
             },
         },
 
-        getFilteredType () {
+        selectedFilteredType () {
             this.changeTypeFiltered()
         },
     },
@@ -58,11 +58,12 @@ export default {
 
         changeTypeFiltered () {
             if (this.getSelectedRegionSearch) {
-                this.selectedFilteredType = this.getFilteredType
+                this.selectedFilteredType = this.getFilteredType.typeValue
                 this.CHANGE_SELECTED_REGION_SEARCH(false)
             }
             if (this.getTypeOfFilter.typeValue === 'language') {
                 this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText, typeValue: 'lang' })
+
             } else if (this.getTypeOfFilter.typeValue === 'country') {
                 this.CHANGE_TYPE_OF_FILTER({ typeValue: 'name', typeText: this.getTypeOfFilter.typeText })
             }

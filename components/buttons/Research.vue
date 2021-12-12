@@ -2,6 +2,9 @@
     <div>
         <v-btn
             class="btn"
+            color="primary"
+            width="156px"
+            height="36px"
             :disabled="!getFilteredType || !getTypeOfFilter"
             @click.prevent.stop="searchFlagsByType()"
         >
@@ -22,7 +25,7 @@ export default {
     methods: {
         ...mapActions(['CHANGE_LOADER', 'ADD_ALL_FLAGS']),
 
-        async searchFlagsByType () {
+        searchFlagsByType () {
             this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter.typeValue, filtered: this.getFilteredType })
             this.CHANGE_LOADER()
         }
@@ -34,18 +37,16 @@ export default {
 <style scoped>
 
 .btn {
-    background-color: #6D2080;
     color: #fff;
     border-radius: 10px;
-    min-width: 156px;
-    min-height: 36px;
     font-size: 17px;
 }
 
 .btn:hover, .btn:focus {
     cursor: pointer !important;
-    color: #fff;
-    background-color: #6D2080;
+    color: #6D2080;
+    background-color: #fff !important;
+    border: 1px solid #6D2080;
 }
 
 .btn-secondary:focus, .btn-secondary.focus {
