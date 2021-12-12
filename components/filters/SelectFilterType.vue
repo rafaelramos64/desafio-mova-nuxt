@@ -3,8 +3,7 @@
         <v-combobox
             v-model="selectedFilterType"
             :items="filterTypes"
-            :label="wasClicked ? 'Filtrar por' : 'Escolha uma opção'"
-            @click="verifyClickEvent()"
+            label="Filtrar por"
         ></v-combobox>
     </div>
 </template>
@@ -15,7 +14,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            selectedFilterType: null,
+            selectedFilterType: { text: 'País', value: 'country' },
             filterTypes: [
                 { text: 'Região', value: 'region' },
                 { text: 'Capital', value: 'capital' },
@@ -23,16 +22,7 @@ export default {
                 { text: 'País', value: 'country' },
                 { text: 'Código de ligação', value: 'callingcode' }
             ],
-            wasClicked: false
         }
-    },
-
-    mounted () {
-        setTimeout(() => {
-            this.getTypeOfFilter === 'region' ?
-                this.selectedFilterType = this.filterTypes[0].value :
-                this.selectedFilterType = null
-        }, 500)
     },
 
     computed: {
@@ -47,10 +37,6 @@ export default {
 
     methods: {
         ...mapActions(['CHANGE_TYPE_OF_FILTER']),
-
-        verifyClickEvent () {
-            this.wasClicked = true
-        },
 
         changeType () {
             let typeOfFilter = [

@@ -7,7 +7,9 @@
         class="pl-7 pr-8"
     >
         <v-toolbar-title >
-            <v-img src="/images/logo.png" alt="logo" />
+            <NuxtLink to="/">
+                <v-img src="/images/logo.png" alt="logo" />
+            </NuxtLink>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
