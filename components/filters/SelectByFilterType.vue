@@ -57,18 +57,27 @@ export default {
         },
 
         changeTypeFiltered () {
-            if (this.getSelectedRegionSearch) {
+            /* if (this.getSelectedRegionSearch) {
                 this.selectedFilteredType = this.getFilteredType.typeValue
                 this.CHANGE_SELECTED_REGION_SEARCH(false)
-            }
-            if (this.getTypeOfFilter.typeValue === 'language') {
+            } */
+             if (this.getTypeOfFilter.typeValue === 'region') {
+                this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText,
+                    typeValue: this.getTypeOfFilter.typeValue})
+
+                this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
+             }
+
+            else if (this.getTypeOfFilter.typeValue === 'language') {
                 this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText, typeValue: 'lang' })
+                this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
 
             } else if (this.getTypeOfFilter.typeValue === 'country') {
                 this.CHANGE_TYPE_OF_FILTER({ typeValue: 'name', typeText: this.getTypeOfFilter.typeText })
+                this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
+            } else {
+                this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
             }
-
-            this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
         },
 
         getFilters () {
@@ -106,15 +115,17 @@ export default {
             }
 
             allLanguages = allLanguages.flat(Infinity)
-            const unikLanguages = []
+            
+            let languagesWithInitials = []
 
             for (const lang of allLanguages) {
-                const languageExist = unikLanguages.find(elem => elem.name === lang.name)
-                if (!languageExist) {
-                    unikLanguages.push(lang.name)
-                }
+                languagesWithInitials.push([{text: lang.name, value: lang.iso639_1}])
             }
-            this.filteredTypesList = unikLanguages
+            languagesWithInitials = languagesWithInitials.flat(Infinity)
+
+            const uniklanguagesWithInitials = [...new Set(languagesWithInitials)]
+
+            this.filteredTypesList = [...uniklanguagesWithInitials]
         },
 
         getAllCountries () {

@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <Loader v-show="this.loading"> </Loader>
+        <Loader v-show="this.loading" />
         <v-row
             v-show="!this.loading"
             justify="center"
@@ -10,18 +10,18 @@
                 cols="12"
                 sm="6"
                 md="4"
-                v-for="flag in listItems"
-                :key="flag.alpha2Code"
+                v-for="country in listItems"
+                :key="country.alpha3Code"
                 class="d-flex justify-center align-centerz p-0"
             >
-                <a @click="sendCountryToViewIt(flag.alpha2Code)">
+                <a @click="sendCountryToViewIt(country.alpha3Code)">
                     <v-tooltip top color="secondary">
                         <template v-slot:activator="{ on, attrs }">
                             <v-img
                                 class="country-img mb-3"
-                                :src="flag.flag"
-                                :lazy-src="flag.flag"
-                                :alt="flag.name"
+                                :src="country.flag"
+                                :lazy-src="country.flag"
+                                :alt="country.name"
                                 v-bind="attrs"
                                 v-on="on"
                             >
@@ -39,7 +39,7 @@
                                 </template>
                             </v-img>
                         </template>
-                        <span>{{ flag.name }}</span>
+                        <span>{{ country.name }}</span>
                     </v-tooltip>
                 </a>
             </v-col>

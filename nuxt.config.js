@@ -21,12 +21,6 @@ export default {
     '~/assets/css/main.css',
   ],
 
-  /* styleResources: {
-    scss: [
-      '@/assets/scss/main.scss',
-    ]
-  }, */
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],
