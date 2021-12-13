@@ -14,7 +14,7 @@
                 :key="country.alpha3Code"
                 class="d-flex justify-center align-centerz p-0"
             >
-                <a @click="sendCountryToViewIt(country.alpha3Code)">
+                <nuxt-link :to="'country/' + country.alpha3Code" @click="sendCountryToViewIt(country.alpha3Code)">
                     <v-tooltip top color="secondary">
                         <template v-slot:activator="{ on, attrs }">
                             <v-img
@@ -41,7 +41,7 @@
                         </template>
                         <span>{{ country.name }}</span>
                     </v-tooltip>
-                </a>
+                </nuxt-link>
             </v-col>
         </v-row>
         <v-row v-show="listItems.length > 2" class="mt-3">

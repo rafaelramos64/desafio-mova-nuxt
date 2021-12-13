@@ -6,28 +6,35 @@
             </v-col>
         </v-row><br />
 
-        <v-row class="mt-4 mb-5 borders">
+        <!-- <v-row class="mt-4 mb-5 borders">
             <Loader v-show="this.loading" />
             <v-col v-show="!this.loading">
                 <NeighborsCountries />
             </v-col>
-        </v-row>
+        </v-row> -->
     </v-container>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default {
-    components: { SelectedCountry, NeighborsCountries, Loader },
-    name: "Country",
+    name: "country",
+    asyncData ({params}) {
+        const alpha3Code = params.alpha
+        return {
+            alpha3Code
+        }
+    },
+
     data() {
         return {
             loading: true,
-            params: this.$route.params.alpha,
         };
   },
 
-    created() {
+    mounted() {
+        this.ADD_ALL_FLAGS({ type: 'alpha', filtered: this.alpha3Code })
         setTimeout(() => {
             this.loading = false;
         }, 1800);
@@ -38,6 +45,10 @@ export default {
             console.log(this.params);
         },
     }, */
+
+    methods: {
+        ...mapActions(['ADD_ALL_FLAGS'])
+    }
 };
 </script>
 

@@ -5,8 +5,21 @@
         <v-row v-show="!this.loading" class="flag-row" >
             <v-col md="12" class="px-4">
                 <v-row no-gutters>
-                    <v-col sm="12" lg="6" md="6" class="p-0 mr-3 flag">
-                        <v-img class="flag" :src="flagData[21]" :alt="flagData[0]" />
+                    <v-col sm="12" lg="6" md="6" class="p-0 mr-3 flag"> {{ getAllFlags[22] }}
+                        <v-img class="flag" :src="flagData[22]" :lazy-src="flagData[22]" :alt="flagData[0]">
+                            <template v-slot:placeholder>
+                                <v-row
+                                    class="fill-height ma-0"
+                                    align="center"
+                                    justify="center"
+                                >
+                                    <v-progress-circular
+                                        indeterminate
+                                        color="primary lighten-2"
+                                    ></v-progress-circular>
+                                </v-row>
+                            </template>
+                        </v-img>
                     </v-col>
 
                     <v-col md="6" sm="12" lg="6" class="text-left py-1 country-info" style="height: 242px">
@@ -46,7 +59,7 @@
 
 <script>
 import Loader from '@/components/Loader'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
     name: 'SelectedCountry',
@@ -60,22 +73,26 @@ export default {
 
     mounted () {
         setTimeout(() => {
-            this.flagData = this.$store.state.allFlags
+            this.flagData = this.getAllFlags
+            this.flagData = this.flagData.flat(Infinity)
+
             this.loading = false
             this.GET_BORDERS(this.flagData[15])
         }, 1500)
     },
 
     computed: {
-        ...mapState(['allFlags'])
+        ...mapGetters(['getAllFlags'])
     },
 
     watch: {
-        allFlags () {
+        getAllFlags () {
             this.loading = true
             setTimeout(() => {
-                this.flagData = this.allFlags
-                this.GET_BORDERS(this.flagData[15])
+                this.flagData = this.getAllFlags
+                this.flagData = this.flagData.flat(Infinity)
+
+                /* this.GET_BORDERS(this.flagData[15]) */
                 this.loading = false
             }, 700)
         }
