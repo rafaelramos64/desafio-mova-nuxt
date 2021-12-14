@@ -8,13 +8,13 @@
             >
             <v-col
                 cols="12"
-                sm="6"
-                md="4"
+                md="6"
+                lg="4"
                 v-for="country in listItems"
                 :key="country.alpha3Code"
-                class="d-flex justify-center align-centerz p-0"
+                class="d-flex justify-center align-center"
             >
-                <nuxt-link :to="'country/' + country.alpha3Code" @click="sendCountryToViewIt(country.alpha3Code)">
+                <nuxt-link :to="'country/' + country.alpha2Code" @click="sendCountryToViewIt(country.alpha2Code)">
                     <v-tooltip top color="secondary">
                         <template v-slot:activator="{ on, attrs }">
                             <v-img
@@ -24,6 +24,7 @@
                                 :alt="country.name"
                                 v-bind="attrs"
                                 v-on="on"
+                                max-width="316"
                             >
                                 <template v-slot:placeholder>
                                     <v-row
@@ -44,6 +45,7 @@
                 </nuxt-link>
             </v-col>
         </v-row>
+
         <v-row v-show="listItems.length > 2" class="mt-3">
             <v-col>
                 <div class="pagination d-flex justify-center">

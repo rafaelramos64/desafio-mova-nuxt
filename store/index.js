@@ -80,13 +80,14 @@ export const actions = {
     async ADD_ALL_FLAGS (context, payload) {
         const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
         const filteredFlags = []
-        
         try {
         const { data } = await this.$axios.get(params)
-
-        for (const i in data) {
+        
+        /* for (const i in data) {
             filteredFlags.push(data[i])
-        }
+        } */
+
+        const filteredFlags = data
 
         context.commit('add_all_flags', filteredFlags)
         } catch (err) {
@@ -107,8 +108,8 @@ export const actions = {
         const alpha = 'alpha'
 
         for (const i in payload) {
-        const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
-        border.push(data)
+            const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
+            border.push(data)
         }
         context.commit('add_borders', border)
     },

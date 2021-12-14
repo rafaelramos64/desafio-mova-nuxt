@@ -5,8 +5,8 @@
         <v-row v-show="!this.loading" class="flag-row" >
             <v-col md="12" class="px-4">
                 <v-row no-gutters>
-                    <v-col sm="12" lg="6" md="6" class="p-0 mr-3 flag"> {{ getAllFlags[22] }}
-                        <v-img class="flag" :src="flagData[22]" :lazy-src="flagData[22]" :alt="flagData[0]">
+                    <v-col sm="12" lg="6" md="6" class="p-0 mr-3 flag">
+                        <v-img class="flag" :src="flagData.flag" :lazy-src="flagData.flag" :alt="flagData.name">
                             <template v-slot:placeholder>
                                 <v-row
                                     class="fill-height ma-0"
@@ -25,28 +25,28 @@
                     <v-col md="6" sm="12" lg="6" class="text-left py-1 country-info" style="height: 242px">
                         <ul>
                             <li>
-                                <span>Nome: {{ flagData[0] }}</span>
+                                <span>Nome: {{ flagData.name }}</span>
                             </li><br>
 
                             <li>
-                                <span>Capital: {{ flagData[5] }}</span>
+                                <span>Capital: {{ flagData.capital }}</span>
                             </li><br>
 
                             <li>
-                                <span>Região: <a @click.prevent.stop="changeToHome(flagData[7]) " class="region" href="">{{ flagData[7] }}</a></span>
+                                <span>Região: <a @click.prevent.stop="changeToHome(flagData.region) " class="region" href="">{{ flagData.region }}</a></span>
                             </li><br>
 
                             <li>
-                                <span>Sub-região: {{ flagData[8] }}</span>
+                                <span>Sub-região: {{ flagData.subregion }}</span>
                             </li><br>
 
                             <li>
-                                <span>População: {{ flagData[9] }}</span>
+                                <span>População: {{ flagData.population }}</span>
                             </li><br>
 
                             <li>
                                 <span>
-                                Linguas: <span v-for="(lang, key) in flagData[19]" :key="key">{{ lang.name }}, {{  }}</span>
+                                    Linguas: <span v-for="(lang, key) in flagData.languages" :key="key">{{ lang.name }}, {{  }}</span>
                                 </span>
                             </li>
                         </ul>
@@ -74,7 +74,7 @@ export default {
     mounted () {
         setTimeout(() => {
             this.flagData = this.getAllFlags
-            this.flagData = this.flagData.flat(Infinity)
+            /* this.flagData = this.flagData.flat(Infinity) */
 
             this.loading = false
             this.GET_BORDERS(this.flagData[15])
@@ -90,7 +90,7 @@ export default {
             this.loading = true
             setTimeout(() => {
                 this.flagData = this.getAllFlags
-                this.flagData = this.flagData.flat(Infinity)
+                /* this.flagData = this.flagData.flat(Infinity) */
 
                 /* this.GET_BORDERS(this.flagData[15]) */
                 this.loading = false

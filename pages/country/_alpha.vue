@@ -6,12 +6,12 @@
             </v-col>
         </v-row><br />
 
-        <!-- <v-row class="mt-4 mb-5 borders">
+        <v-row class="mt-4 mb-5 borders">
             <Loader v-show="this.loading" />
             <v-col v-show="!this.loading">
                 <NeighborsCountries />
             </v-col>
-        </v-row> -->
+        </v-row>
     </v-container>
 </template>
 
