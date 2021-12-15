@@ -40,12 +40,6 @@ export default {
         }, 1800);
     },
 
-    /* watch: {
-        params() {
-            console.log(this.params);
-        },
-    }, */
-
     methods: {
         ...mapActions(['ADD_ALL_FLAGS'])
     }

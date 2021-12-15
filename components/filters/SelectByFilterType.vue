@@ -70,7 +70,7 @@ export default {
             else if (this.getTypeOfFilter.typeValue === 'lang') {
                 if (this.selectedFilteredType?.value) {
                     this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText,
-                        typeValue: this.getTypeOfFilter.typeText })
+                        typeValue: this.getTypeOfFilter.typeValue })
 
                     this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
                 }
