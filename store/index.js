@@ -1,14 +1,12 @@
 export const state = () => ({
     typeOfFilter: {
         typeText: 'País',
-        typeValue: 'country'
+        typeValue: 'name'
     },
     filteredType: null,
     allFlags: [],
-    load: 1,
     borders: [],
     selectedRegionSearch: null,
-    /* itemsToShow: [] */
 })
 
 export const getters = {
@@ -22,10 +20,6 @@ export const getters = {
 
     getAllFlags (state) {
         return state.allFlags
-    },
-
-    getLoad (state) {
-        return state.load
     },
 
     getBorders (state) {
@@ -81,37 +75,36 @@ export const actions = {
         const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
         let filteredFlags = []
         console.log(payload)
-
         try {
-            if (payload?.goToCountryPage) {   
+            if (payload?.type === 'alpha') {   
                 const { data } = await this.$axios.get(params)
-            
+    
                 filteredFlags = data
             } else {
                 const { data } = await this.$axios.get(params)
-
+    
                 for (const i in data) {
                     filteredFlags.push(data[i])
                 }
             }
-
+    
             context.commit('add_all_flags', filteredFlags)
-        } catch (err) {
-        console.error(err)
+        } catch (erro) {
+            console.error(erro)
         }
     },
 
     CHANGE_FILTERED_TYPE (context, payload) {
-        context.commit('changing_filtered_type', payload)
-    },
-
-    CHANGE_LOADER (context) {
-        context.commit('change_loader')
+        if (payload?.value) {
+            context.commit('changing_filtered_type', payload.value)
+        } else {
+            context.commit('changing_filtered_type', payload)
+        }
     },
 
     async ADD_BORDERS (context, payload) {
         const borders = []
-
+        console.log(payload)
         for (const i in payload) {
             borders.push(payload[i])
         }

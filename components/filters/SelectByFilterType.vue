@@ -27,8 +27,7 @@ export default {
     },
 
     mounted () {
-        this.getCountries()
-        /* this.changeTypeFiltered() */
+        this.getCountries() 
     },
 
     computed: {
@@ -54,6 +53,8 @@ export default {
         async getCountries () { 
             const { data } = await this.$axios.get('/all')
             this.allCountries = data
+
+            this.getTypeOfFilter.typeValue === 'name' ? this.getAllCountries() : ''
         },
 
         changeTypeFiltered () {
@@ -61,35 +62,34 @@ export default {
                 this.selectedFilteredType = this.getFilteredType.typeValue
                 this.CHANGE_SELECTED_REGION_SEARCH(false)
             } */
-             if (this.getTypeOfFilter.typeValue === 'region') {
-                this.CHANGE_TYPE_OF_FILTER( this.getTypeOfFilter )
-
+            if (this.getTypeOfFilter.typeValue === 'region') {
+                /* this.CHANGE_TYPE_OF_FILTER(this.getTypeOfFilter) */
                 this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
-             }
+            }
 
-            else if (this.getTypeOfFilter.typeValue === 'language') {
-                console.log(this.getTypeOfFilter.typeValue)
-                this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText, typeValue: 'lang' })
-                this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
+            else if (this.getTypeOfFilter.typeValue === 'lang') {
+                if (this.selectedFilteredType?.value) {
+                    this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText,
+                        typeValue: this.getTypeOfFilter.typeText })
 
-            } else if (this.getTypeOfFilter.typeValue === 'country') {
-                this.CHANGE_TYPE_OF_FILTER({ typeValue: 'name', typeText: this.getTypeOfFilter.typeText })
-                this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
+                    this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
+                }
+
             } else {
                 this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
             }
         },
 
         getFilters () {
-            this.selectedFilteredType = null
+            this.selectedFilteredType = ''
 
             if (this.getTypeOfFilter.typeValue === 'region') {
                 this.filteredTypesList = this.regions
             } else if (this.getTypeOfFilter.typeValue === 'capital') {
                 this.getAllCapitals()
-            } else if (this.getTypeOfFilter.typeValue === 'language' || this.getTypeOfFilter.typeValue === 'lang') {
+            } else if (this.getTypeOfFilter.typeValue === 'lang') {
                 this.getAllLanguages()
-            } else if (this.getTypeOfFilter.typeValue === 'country' || this.getTypeOfFilter.typeValue === 'name') {
+            } else if (this.getTypeOfFilter.typeValue === 'name') {
                 this.getAllCountries()
             } else if (this.getTypeOfFilter.typeValue === 'callingcode') {
                 this.getAllCallingCodes()

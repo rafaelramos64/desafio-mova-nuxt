@@ -199,7 +199,7 @@ export default {
             this.ADD_ALL_FLAGS({ type: 'alpha', filtered: neighborCode })
         }, 100)
 
-            this.$router.push({ name: 'Country', params: { alpha: neighborCode } })
+            /* this.$router.push({ name: 'Country', params: { alpha: neighborCode } }) */
         },
 
         prevPage () {

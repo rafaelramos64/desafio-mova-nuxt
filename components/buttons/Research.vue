@@ -23,11 +23,10 @@ export default {
     },
 
     methods: {
-        ...mapActions(['CHANGE_LOADER', 'ADD_ALL_FLAGS']),
+        ...mapActions(['ADD_ALL_FLAGS']),
 
         searchFlagsByType () {
             this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter.typeValue, filtered: this.getFilteredType })
-            this.CHANGE_LOADER()
         }
     }
 }

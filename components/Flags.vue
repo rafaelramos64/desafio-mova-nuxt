@@ -14,7 +14,7 @@
                 :key="country.alpha3Code"
                 class="d-flex justify-center align-center"
             >
-                <nuxt-link :to="'country/' + country.alpha2Code" @click="sendCountryToViewIt(country.alpha2Code)">
+                <nuxt-link :to="'country/' + country.alpha2Code" @click="goToCountryPage(country.alpha2Code)">
                     <v-tooltip top color="secondary">
                         <template v-slot:activator="{ on, attrs }">
                             <v-img
@@ -109,7 +109,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['getAllFlags', 'getLoad', 'getTypeOfFilter', 'getFilteredType', 'getItemsToShow']),
+        ...mapGetters(['getAllFlags', 'getTypeOfFilter', 'getFilteredType', 'getItemsToShow']),
 
         allowList () {
             const { totalPages } = this
@@ -230,12 +230,12 @@ export default {
             this.currentPage += 1
         },
 
-        async sendCountryToViewIt (alphaCode) {
+        goToCountryPage (alphaCode) {
             setTimeout(() => {
-                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode, goToCountryPage: true })
+                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode })
             }, 1000)
             
-            this.$router.push({ name: 'Country', params: { alpha: alphaCode } })
+            /* this.$router.push({ name: 'Country', params: { alpha: alphaCode } }) */
         }
     }
 }

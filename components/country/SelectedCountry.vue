@@ -1,8 +1,8 @@
 <template>
     <v-container>
-        <Loader v-show="this.loading" /> 
+        <Loader v-show="loading" /> 
 
-        <v-row v-show="!this.loading" class="mt-5" >
+        <v-row v-show="!loading" class="mt-5" >
             <v-col cols="12" class="px-4">
                 <v-row no-gutters>
                     <v-col cols="12" md="5" class="px-0">
@@ -95,7 +95,7 @@ export default {
         getAllFlags () {
             this.loading = true
             setTimeout(() => {
-                /* this.flagData = this.getAllFlags */
+                this.flagData = this.getAllFlags
 
                 this.ADD_BORDERS(this.flagData.borders)
                 this.loading = false
