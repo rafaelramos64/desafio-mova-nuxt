@@ -1,28 +1,26 @@
 <template>
-    <v-container>
-        <v-row
-            align="center"
-            :justify="$vuetify.breakpoint.smAndDown ? 'center' : 'space-around'"
-            class="mb-3 mt-5">
-            <v-col class="d-flex justify-center" cols="12" sm="5" md="4">
-                <SelectFilterType />
-            </v-col>
+    <div>
+        <v-container>
+            <v-row
+                align="center"
+                :justify="$vuetify.breakpoint.smAndDown ? 'center' : 'space-around'"
+                class="mb-3 mt-5 mx-auto">
+                <v-col class="d-flex justify-center" cols="12" sm="5" md="4">
+                    <SelectFilterType />
+                </v-col>
 
-            <v-col v-show="getTypeOfFilter.typeValue !== ''" class="d-flex justify-center" cols="12" sm="5" md="4">
-                <SelectByFilterType />
-            </v-col>
+                <v-col v-show="getTypeOfFilter.typeValue !== ''" class="d-flex justify-center" cols="12" sm="5" md="4">
+                    <SelectByFilterType />
+                </v-col>
 
-            <v-col class="d-flex justify-center" cols="5" sm="4">
-                <Research/>
-            </v-col>
-        </v-row>
+                <v-col class="d-flex justify-center" cols="5" sm="4">
+                    <Research/>
+                </v-col>
+            </v-row>
+        </v-container>
 
-        <v-row justify="center" class="mb-3">
-            <v-col cols="12">
-                <Flags />
-            </v-col>
-        </v-row> 
-    </v-container>
+        <Flags />
+    </div>
 </template>
 
 <script>

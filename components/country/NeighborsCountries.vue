@@ -1,61 +1,50 @@
 <template>
     <v-container>
-        <Loader v-show="this.loading" />
-        <v-row
-            v-show="!this.loading"
-            justify="center"
-            class="text-center"
-            >
+        <span>Países Vizinhos: </span><br><br><br>
+        <Loader v-show="this.loading"> </Loader>
+
+        <v-row v-show="!this.loading">
+
             <v-col
-                cols="12"
-                md="6"
-                lg="4"
-                v-for="country in listItems"
-                :key="country.alpha3Code"
-                class="d-flex justify-center align-center"
+                cols="12" md="4"
+                class="p-0"
+                v-for="neighbor in toListNeighbors" :key="neighbor.name"
             >
-                <nuxt-link :to="'country/' + country.alpha2Code" @click="goToCountryPage(country.alpha2Code)">
-                    <v-tooltip top color="secondary">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-img
-                                class="country-img mb-3"
-                                :src="country.flag"
-                                :lazy-src="country.flag"
-                                :alt="country.name"
-                                v-bind="attrs"
-                                v-on="on"
-                                max-width="316"
-                            >
-                                <template v-slot:placeholder>
-                                    <v-row
-                                        class="fill-height ma-0"
-                                        align="center"
-                                        justify="center"
-                                    >
-                                        <v-progress-circular
-                                            indeterminate
-                                            color="primary lighten-2"
-                                        ></v-progress-circular>
-                                    </v-row>
-                                </template>
-                            </v-img>
-                        </template>
-                        <span>{{ country.name }}</span>
-                    </v-tooltip>
-                </nuxt-link>
+                <v-img
+                    class="mb-3 ml-0 mr-0 neighbor-img"
+                    width="316"
+                    height="181"
+                    :src="neighbor.flag"
+                    :lazy-src="neighbor.flag"
+                    :alt="neighbor.name"
+                    @click="reloadCurrentPage(neighbor.alpha2Code)"
+                >
+                    <template v-slot:placeholder>
+                        <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center"
+                        >
+                            <v-progress-circular
+                                indeterminate
+                                color="primary lighten-2"
+                            ></v-progress-circular>
+                        </v-row>
+                    </template>
+                </v-img>
             </v-col>
         </v-row>
 
-        <v-row v-show="listItems.length > 2" class="mt-3">
+        <v-row v-show="this.getBorders.length > 2" class="mt-3">
             <v-col>
                 <div class="pagination d-flex justify-center">
                     <div
                         v-show="!disablePrevButton"
                         @click="prevPage()"
                         class="back-page cursor"
-                    >   ❮ &nbsp;
+                    >
+                        ❮ &nbsp; 
                     </div>
-
                     <div
                         v-for="page in allowList"
                         :key="page"
@@ -68,14 +57,19 @@
                             {{ page }}
                         </div>
                     </div>
-                    
                     <div
                         v-show="!disableNextButton"
                         @click="nextPage()"
                         class="next-page cursor"
-                    >   &nbsp; ❯
+                    >
+                        &nbsp; ❯
                     </div>
                 </div>
+            </v-col>
+        </v-row>
+        <v-row v-if="!this.getBorders.length > 0">
+            <v-col class="pl-15">
+                <span style="color: #6D2080">Nenhum país encontrado </span>
             </v-col>
         </v-row>
     </v-container>
@@ -83,33 +77,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Loader from '@/components/Loader'
 
 export default {
+    name: 'NeighborsCountries',
+    components: { Loader },
     data () {
         return {
-            loading: true,
+            loading: null,
             currentPage: 1,
-            itemsPerPage: 9,
+            itemsPerPage: 3,
             disablePrevButton: false,
             disableNextButton: false
         }
     },
 
-    mounted () {
-        setTimeout(() => {
-            if (this.getFilteredType !== null && this.getTypeOfFilter !== null) {
-                this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter, filtered: this.getFilteredType })
-            } else {
-                this.ADD_ALL_FLAGS()
-            }
-        }, 500)
-        setTimeout(() => {
-            this.loading = false
-        }, 1000)
-    },
-
     computed: {
-        ...mapGetters(['getAllFlags', 'getTypeOfFilter', 'getFilteredType', 'getItemsToShow']),
+        ...mapGetters(['getBorders', 'getAllFlags']),
 
         allowList () {
             const { totalPages } = this
@@ -152,72 +136,70 @@ export default {
             return allowList
         },
 
-        listItems () {
-            const { getAllFlags, currentPage, itemsPerPage } = this
+        toListNeighbors () {
+            const { getBorders, currentPage, itemsPerPage } = this
 
             const result = []
-            const totalPage = Math.ceil(getAllFlags.length / itemsPerPage)
+            const totalPage = Math.ceil(getBorders.length / itemsPerPage)
             let count = (currentPage * itemsPerPage) - itemsPerPage
             const delimiter = count + itemsPerPage
 
             if (currentPage <= totalPage) {
                 for (let i = count; i < delimiter; i++) {
-                    if (getAllFlags[i]) {
-                        result.push(getAllFlags[i])
+                    if (getBorders[i]) {
+                        result.push(getBorders[i])
                     }
-                    count++
+                count++
                 }
             }
             return result
         },
 
         totalPages () {
-            const allFlags = []
-            for (const i in this.getAllFlags) {
-                allFlags.push(this.getAllFlags[i].flag)
+            const allBorders = []
+            for (const i in this.getBorders) {
+                allBorders.push(this.getBorders[i].flag)
             }
-
-            const total = allFlags.length / this.itemsPerPage
+            const total = allBorders.length / this.itemsPerPage
             return total !== Infinity ? Math.ceil(total) : 0
         }
     },
 
     watch: {
-        load () {
-            this.changeLoadingStatus()
+        getAllFlags () {
+            this.currentPage = 1
+            this.loading = true
+
+        setTimeout(() => {
+            this.flagData = this.getAllFlags
+            this.loading = false
+        }, 800)
         },
 
         currentPage () {
-            if (this.currentPage === 1) {
+        if (this.currentPage === 1) {
             this.disablePrevButton = true
-            } else {
+        } else {
             this.disablePrevButton = false
-            }
+        }
 
-            if (this.currentPage === this.totalPages) {
+        if (this.currentPage === this.totalPages) {
             this.disableNextButton = true
-            } else {
+        } else {
             this.disableNextButton = false
-            }
-        },
-
-        getAllFlags () {
-            this.currentPage = 1
+        }
         }
     },
 
     methods: {
         ...mapActions(['ADD_ALL_FLAGS']),
 
-        async changeLoadingStatus () {
-            this.loading = true
-            setTimeout(() => {
-                this.loading = true
-            }, 500)
+        reloadCurrentPage (neighborCode) {
+        setTimeout(() => {
+            this.ADD_ALL_FLAGS({ type: 'alpha', filtered: neighborCode })
+        }, 100)
 
-            setTimeout(() => {
-                this.loading = false
-            }, 900)
+            /* this.$router.push({ name: 'Country', params: { alpha: neighborCode } }) */
         },
 
         prevPage () {
@@ -228,23 +210,17 @@ export default {
         nextPage () {
             this.disablePrevButton = false
             this.currentPage += 1
-        },
-
-        goToCountryPage (alphaCode) {
-            setTimeout(() => {
-                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode })
-            }, 1000)
-            
-            /* this.$router.push({ name: 'Country', params: { alpha: alphaCode } }) */
         }
     }
 }
 </script>
 
-<style scoped>
-.cursor {
-    cursor: pointer;
+<style  scoped>
+.neighbor-img {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    object-fit: contain;
 }
+
 
 .pagination {
     color: #8d8d8d;
@@ -290,19 +266,5 @@ div .active {
 
 .pagination :hover:not(.active) {
     background-color: #ddd;
-}
-
-@media screen and (max-width: 550px) {
-    .country-img, .flag {
-        width: 100% !important;
-    }
-}
-
-.country-img {
-    width: 316px;
-    height: 181px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding: 0;
-    object-fit: contain;
 }
 </style>
