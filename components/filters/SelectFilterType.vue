@@ -14,12 +14,12 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data () {
         return {
-            selectedFilterType: { text: 'País', value: 'country' },
+            selectedFilterType: { text: 'País', value: 'name' },
             filterTypes: [
                 { text: 'Região', value: 'region' },
                 { text: 'Capital', value: 'capital' },
-                { text: 'Língua', value: 'language' },
-                { text: 'País', value: 'country' },
+                { text: 'Língua', value: 'lang' },
+                { text: 'País', value: 'name' },
                 { text: 'Código de ligação', value: 'callingcode' }
             ],
         }

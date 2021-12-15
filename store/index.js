@@ -1,14 +1,12 @@
 export const state = () => ({
     typeOfFilter: {
         typeText: 'País',
-        typeValue: 'country'
+        typeValue: 'name'
     },
     filteredType: null,
     allFlags: [],
-    load: 1,
     borders: [],
     selectedRegionSearch: null,
-    /* itemsToShow: [] */
 })
 
 export const getters = {
@@ -22,10 +20,6 @@ export const getters = {
 
     getAllFlags (state) {
         return state.allFlags
-    },
-
-    getLoad (state) {
-        return state.load
     },
 
     getBorders (state) {
@@ -78,39 +72,52 @@ export const actions = {
     },
 
     async ADD_ALL_FLAGS (context, payload) {
-        const params = payload ? `/${payload.type}/${payload.filtered.value}` : '/all'
-        const filteredFlags = []
-        
+        const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
+        let filteredFlags = []
+        console.log(payload)
         try {
-        const { data } = await this.$axios.get(params)
-
-        for (const i in data) {
-            filteredFlags.push(data[i])
-        }
-
-        context.commit('add_all_flags', filteredFlags)
-        } catch (err) {
-        console.error(err)
+            if (payload?.type === 'alpha') {   
+                const { data } = await this.$axios.get(params)
+    
+                filteredFlags = data
+            } else {
+                const { data } = await this.$axios.get(params)
+    
+                for (const i in data) {
+                    filteredFlags.push(data[i])
+                }
+            }
+    
+            context.commit('add_all_flags', filteredFlags)
+        } catch (erro) {
+            console.error(erro)
         }
     },
 
     CHANGE_FILTERED_TYPE (context, payload) {
-        context.commit('changing_filtered_type', payload)
-    },
-
-    CHANGE_LOADER (context) {
-        context.commit('change_loader')
+        if (payload?.value) {
+            context.commit('changing_filtered_type', payload.value)
+        } else {
+            context.commit('changing_filtered_type', payload)
+        }
     },
 
     async ADD_BORDERS (context, payload) {
-        const border = []
-        const alpha = 'alpha'
-
+        const borders = []
+        console.log(payload)
         for (const i in payload) {
-        const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
-        border.push(data)
+            borders.push(payload[i])
         }
-        context.commit('add_borders', border)
+
+        const params = [...borders]
+
+        const { data } = await this.$axios.get(`/alpha?codes=${params}`)
+
+        /* for (const i in payload) {
+            const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
+            borders.push(data)
+        } */
+        context.commit('add_borders', data)
     },
 
     CHANGE_SELECTED_REGION_SEARCH (context, payload) {
