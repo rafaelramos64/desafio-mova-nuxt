@@ -232,7 +232,7 @@ export default {
 
         async sendCountryToViewIt (alphaCode) {
             setTimeout(() => {
-                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode })
+                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode, goToCountryPage: true })
             }, 1000)
             
             this.$router.push({ name: 'Country', params: { alpha: alphaCode } })
@@ -245,6 +245,7 @@ export default {
 .cursor {
     cursor: pointer;
 }
+
 .pagination {
     color: #8d8d8d;
 }

@@ -2,11 +2,16 @@
     <v-container>
         <Loader v-show="this.loading" /> 
 
-        <v-row v-show="!this.loading" class="flag-row" >
-            <v-col md="12" class="px-4">
+        <v-row v-show="!this.loading" class="mt-5" >
+            <v-col cols="12" class="px-4">
                 <v-row no-gutters>
-                    <v-col sm="12" lg="6" md="6" class="p-0 mr-3 flag">
-                        <v-img class="flag" :src="flagData.flag" :lazy-src="flagData.flag" :alt="flagData.name">
+                    <v-col cols="12" md="5" class="px-0">
+                        <v-img
+                            class="flag"
+                            :src="flagData.flag"
+                            :lazy-src="flagData.flag"
+                            :alt="flagData.name"
+                        >
                             <template v-slot:placeholder>
                                 <v-row
                                     class="fill-height ma-0"
@@ -22,27 +27,29 @@
                         </v-img>
                     </v-col>
 
-                    <v-col md="6" sm="12" lg="6" class="text-left py-1 country-info" style="height: 242px">
+                    <v-col cols="12" md="4" class="text-left pt-1 country-info" style="height: 242px">
                         <ul>
-                            <li>
+                            <li class="mb-5">
                                 <span>Nome: {{ flagData.name }}</span>
-                            </li><br>
+                            </li>
 
-                            <li>
+                            <li class="mb-5">
                                 <span>Capital: {{ flagData.capital }}</span>
-                            </li><br>
+                            </li>
+                            <li class="mb-5">
+                                <span>
+                                    Região: 
+                                    <a @click="changeToHome(flagData.region) " class="region" href="">{{ flagData.region }}</a>
+                                </span>
+                            </li>
 
-                            <li>
-                                <span>Região: <a @click.prevent.stop="changeToHome(flagData.region) " class="region" href="">{{ flagData.region }}</a></span>
-                            </li><br>
-
-                            <li>
+                            <li class="mb-5">
                                 <span>Sub-região: {{ flagData.subregion }}</span>
-                            </li><br>
+                            </li>
 
-                            <li>
+                            <li class="mb-5">
                                 <span>População: {{ flagData.population }}</span>
-                            </li><br>
+                            </li>
 
                             <li>
                                 <span>
@@ -59,7 +66,7 @@
 
 <script>
 import Loader from '@/components/Loader'
-import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'SelectedCountry',
@@ -74,10 +81,9 @@ export default {
     mounted () {
         setTimeout(() => {
             this.flagData = this.getAllFlags
-            /* this.flagData = this.flagData.flat(Infinity) */
 
             this.loading = false
-            this.GET_BORDERS(this.flagData[15])
+            this.ADD_BORDERS(this.flagData.borders)
         }, 1500)
     },
 
@@ -89,26 +95,29 @@ export default {
         getAllFlags () {
             this.loading = true
             setTimeout(() => {
-                this.flagData = this.getAllFlags
-                /* this.flagData = this.flagData.flat(Infinity) */
+                /* this.flagData = this.getAllFlags */
 
-                /* this.GET_BORDERS(this.flagData[15]) */
+                this.ADD_BORDERS(this.flagData.borders)
                 this.loading = false
             }, 700)
         }
     },
 
     methods: {
-        ...mapMutations(['CHANGE_TYPE_OF_FILTER', 'CHANGING_FILTERED_TYPE']),
-        ...mapActions(['GET_FLAGS', 'GET_BORDERS']),
+        ...mapActions([
+            'ADD_BORDERS',
+            'CHANGE_TYPE_OF_FILTER',
+            'CHANGING_FILTERED_TYPE',
+            'CHANGE_SELECTED_REGION_SEARCH'
+        ]),
 
         changeToHome (region) {
             const regionToFilter = region.toLowerCase()
 
             setTimeout(() => {
-                this.CHANGE_TYPE_OF_FILTER({ type: 'region', textType: 'Região' })
+                this.CHANGE_TYPE_OF_FILTER({ typeText: 'Região', typValue: 'region' })
                 this.CHANGING_FILTERED_TYPE(regionToFilter)
-                this.$store.commit('CHANGE_SELECTED_REGION_SEARCH', true)
+                this.CHANGE_SELECTED_REGION_SEARCH(true)
             }, 200)
             this.$router.push({ name: 'Home' })
         }
@@ -117,15 +126,8 @@ export default {
 </script>
 
 <style scoped>
-.flag-row {
-    margin-top: 96px;
-}
 
 @media screen and (max-width: 550px) {
-    .flag-row {
-        margin-top: 10px !important;
-    }
-
     .country-info {
         margin-top: 10px !important;
     }
@@ -146,6 +148,10 @@ ul {
     min-width: 213px;
     padding: 0 !important;
     margin: 0 !important;
+}
+
+.region {
+    text-decoration: none;
 }
 
 </style>

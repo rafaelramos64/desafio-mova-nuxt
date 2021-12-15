@@ -79,17 +79,23 @@ export const actions = {
 
     async ADD_ALL_FLAGS (context, payload) {
         const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
-        const filteredFlags = []
+        let filteredFlags = []
+        console.log(payload)
+
         try {
-        const { data } = await this.$axios.get(params)
-        
-        /* for (const i in data) {
-            filteredFlags.push(data[i])
-        } */
+            if (payload?.goToCountryPage) {   
+                const { data } = await this.$axios.get(params)
+            
+                filteredFlags = data
+            } else {
+                const { data } = await this.$axios.get(params)
 
-        const filteredFlags = data
+                for (const i in data) {
+                    filteredFlags.push(data[i])
+                }
+            }
 
-        context.commit('add_all_flags', filteredFlags)
+            context.commit('add_all_flags', filteredFlags)
         } catch (err) {
         console.error(err)
         }
@@ -104,14 +110,21 @@ export const actions = {
     },
 
     async ADD_BORDERS (context, payload) {
-        const border = []
-        const alpha = 'alpha'
+        const borders = []
 
         for (const i in payload) {
-            const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
-            border.push(data)
+            borders.push(payload[i])
         }
-        context.commit('add_borders', border)
+
+        const params = [...borders]
+
+        const { data } = await this.$axios.get(`/alpha?codes=${params}`)
+
+        /* for (const i in payload) {
+            const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
+            borders.push(data)
+        } */
+        context.commit('add_borders', data)
     },
 
     CHANGE_SELECTED_REGION_SEARCH (context, payload) {

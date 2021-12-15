@@ -1,23 +1,43 @@
 <template>
     <v-container>
-        <span class="neighbors-countries" style="color: #000">Países Vizinhos: </span><br><br><br>
+        <span>Países Vizinhos: </span><br><br><br>
         <Loader v-show="this.loading"> </Loader>
 
         <v-row v-show="!this.loading">
+
             <v-col
-                sm="12" xs="12" lg="4" md="4"
+                cols="12" md="4"
                 class="p-0"
-                v-for="(neighbor, index) in listItems" :key="index"
+                v-for="neighbor in toListNeighbors" :key="neighbor.name"
             >
-                <a @click="reloadCurrentPage(neighbor.alpha2Code)" >
-                    <v-img class="country-img mb-3 ml-0 mr-0" :src="neighbor.flag" :alt="neighbor.name" />
-                </a>
+                <v-img
+                    class="mb-3 ml-0 mr-0 neighbor-img"
+                    width="316"
+                    height="181"
+                    :src="neighbor.flag"
+                    :lazy-src="neighbor.flag"
+                    :alt="neighbor.name"
+                    @click="reloadCurrentPage(neighbor.alpha2Code)"
+                >
+                    <template v-slot:placeholder>
+                        <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center"
+                        >
+                            <v-progress-circular
+                                indeterminate
+                                color="primary lighten-2"
+                            ></v-progress-circular>
+                        </v-row>
+                    </template>
+                </v-img>
             </v-col>
         </v-row>
 
-        <v-row v-show="this.borders.length > 2" class="mt-3">
+        <v-row v-show="this.getBorders.length > 2" class="mt-3">
             <v-col>
-                <div class="pagination">
+                <div class="pagination d-flex justify-center">
                     <div
                         v-show="!disablePrevButton"
                         @click="prevPage()"
@@ -47,17 +67,16 @@
                 </div>
             </v-col>
         </v-row>
-
-        <v-row v-show="!this.borders[0]">
-            <v-col>
-                <span class="neighbors-countries text-center">Nenhum país encontrado </span><br><br><br>
+        <v-row v-if="!this.getBorders.length > 0">
+            <v-col class="pl-15">
+                <span style="color: #6D2080">Nenhum país encontrado </span>
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Loader from '@/components/Loader'
 
 export default {
@@ -74,7 +93,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['borders', 'allFlags']),
+        ...mapGetters(['getBorders', 'getAllFlags']),
 
         allowList () {
             const { totalPages } = this
@@ -117,18 +136,18 @@ export default {
             return allowList
         },
 
-        listItems () {
-            const { borders, currentPage, itemsPerPage } = this
+        toListNeighbors () {
+            const { getBorders, currentPage, itemsPerPage } = this
 
             const result = []
-            const totalPage = Math.ceil(borders.length / itemsPerPage)
+            const totalPage = Math.ceil(getBorders.length / itemsPerPage)
             let count = (currentPage * itemsPerPage) - itemsPerPage
             const delimiter = count + itemsPerPage
 
             if (currentPage <= totalPage) {
                 for (let i = count; i < delimiter; i++) {
-                    if (borders[i]) {
-                        result.push(borders[i])
+                    if (getBorders[i]) {
+                        result.push(getBorders[i])
                     }
                 count++
                 }
@@ -138,8 +157,8 @@ export default {
 
         totalPages () {
             const allBorders = []
-            for (const i in this.borders) {
-                allBorders.push(this.borders[i].flag)
+            for (const i in this.getBorders) {
+                allBorders.push(this.getBorders[i].flag)
             }
             const total = allBorders.length / this.itemsPerPage
             return total !== Infinity ? Math.ceil(total) : 0
@@ -147,12 +166,12 @@ export default {
     },
 
     watch: {
-        allFlags () {
+        getAllFlags () {
             this.currentPage = 1
             this.loading = true
 
         setTimeout(() => {
-            this.flagData = this.allFlags
+            this.flagData = this.getAllFlags
             this.loading = false
         }, 800)
         },
@@ -173,11 +192,11 @@ export default {
     },
 
     methods: {
-        ...mapActions(['GET_FLAGS']),
+        ...mapActions(['ADD_ALL_FLAGS']),
 
         reloadCurrentPage (neighborCode) {
         setTimeout(() => {
-            this.GET_FLAGS({ type: 'alpha', filtered: neighborCode })
+            this.ADD_ALL_FLAGS({ type: 'alpha', filtered: neighborCode })
         }, 100)
 
             this.$router.push({ name: 'Country', params: { alpha: neighborCode } })
@@ -196,6 +215,56 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style  scoped>
+.neighbor-img {
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    object-fit: contain;
+}
 
+
+.pagination {
+    color: #8d8d8d;
+}
+
+.page {
+    padding: 5px 8px 8px 8px;
+    margin-right: 5px;
+    text-align: center;
+    vertical-align: middle;
+    width: 34px;
+    height: 34px;
+    left: 86px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+div .active {
+    background-color: #6D2080 !important;
+    color: #fff !important;
+}
+
+.back-page {
+    margin-top: 3px;
+    width: 28px;
+    height: 28px;
+    margin-right: 5px;
+    padding-left: 10px;
+    padding-top: 2.5px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+.next-page {
+    margin-top: 3px;
+    width: 28px;
+    height: 28px;
+    padding-left: 4px;
+    padding-top: 2.5px;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+.pagination :hover:not(.active) {
+    background-color: #ddd;
+}
 </style>

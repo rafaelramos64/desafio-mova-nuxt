@@ -62,13 +62,13 @@ export default {
                 this.CHANGE_SELECTED_REGION_SEARCH(false)
             } */
              if (this.getTypeOfFilter.typeValue === 'region') {
-                this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText,
-                    typeValue: this.getTypeOfFilter.typeValue})
+                this.CHANGE_TYPE_OF_FILTER( this.getTypeOfFilter )
 
                 this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
              }
 
             else if (this.getTypeOfFilter.typeValue === 'language') {
+                console.log(this.getTypeOfFilter.typeValue)
                 this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText, typeValue: 'lang' })
                 this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
 
