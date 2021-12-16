@@ -32,7 +32,7 @@ export default {
       '~/components/filters',
       '~/components/app',
       '~/components/country',
-      '~/components/flag',
+      '~/components/flags',
       '~/components/loaders',
     ]
   },

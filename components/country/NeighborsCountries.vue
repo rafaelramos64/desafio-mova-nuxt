@@ -10,29 +10,9 @@
                 class="p-0"
                 v-for="neighbor in toListNeighbors" :key="neighbor.name"
             >
-                <Flag :country="neighbor" />
-                <!-- v-img
-                    class="mb-3 ml-0 mr-0 neighbor-img"
-                    width="316"
-                    height="181"
-                    :src="neighbor.flag"
-                    :lazy-src="neighbor.flag"
-                    :alt="neighbor.name"
-                    @click="reloadCurrentPage(neighbor.alpha2Code)"
-                >
-                    <template v-slot:placeholder>
-                        <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
-                        >
-                            <v-progress-circular
-                                indeterminate
-                                color="primary lighten-2"
-                            ></v-progress-circular>
-                        </v-row>
-                    </template>
-                </v-img> -->
+                <div @click="reloadCurrentPage(neighbor.alpha2Code)">
+                    <Flag :country="neighbor" />
+                </div>
             </v-col>
         </v-row>
 
@@ -194,11 +174,9 @@ export default {
         ...mapActions(['ADD_ALL_FLAGS']),
 
         reloadCurrentPage (neighborCode) {
-        setTimeout(() => {
-            this.ADD_ALL_FLAGS({ type: 'alpha', filtered: neighborCode })
-        }, 100)
-
-            /* this.$router.push({ name: 'Country', params: { alpha: neighborCode } }) */
+            setTimeout(() => {
+                this.ADD_ALL_FLAGS({ type: 'alpha', filtered: neighborCode })
+            }, 100)
         },
 
         prevPage () {
@@ -215,12 +193,6 @@ export default {
 </script>
 
 <style  scoped>
-.neighbor-img {
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    object-fit: contain;
-}
-
-
 .pagination {
     color: #8d8d8d;
 }

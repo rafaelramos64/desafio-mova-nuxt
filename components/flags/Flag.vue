@@ -1,8 +1,9 @@
 <template>
-    <v-tooltip top color="secondary">
+    <v-tooltip top color="secondary" :disabled="selectedCountry">
         <template v-slot:activator="{ on, attrs }">
             <v-img
-                class="country-img mb-3"
+                class="mb-3"
+                :class="selectedCountry ? 'selectedCountry' : 'country-img change-cursor'"
                 :src="country.flag"
                 :lazy-src="country.flag"
                 :alt="country.name"
@@ -32,8 +33,13 @@
 
 export default {
     name: 'Flag',
-    props: ['country'],
-
+    props: {
+        country: [],
+        selectedCountry: {
+            type: Boolean,
+            default: false
+        }
+    },
 }
 </script>
 
@@ -50,5 +56,18 @@ export default {
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     padding: 0;
     object-fit: contain;
+}
+
+.selectedCountry {
+    min-width: 443px;
+    max-width: 443px;
+    min-height: 258px;
+    max-height: 258px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    padding: 0 !important;
+}
+
+.change-cursor {
+    cursor: pointer;
 }
 </style>
