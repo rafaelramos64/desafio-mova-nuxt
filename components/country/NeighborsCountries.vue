@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <span class="text-title-color">Países Vizinhos: </span><br><br><br>
-        <Loader v-show="this.loading"> </Loader>
+        <Loader v-show="this.loading" />
 
         <v-row v-show="!this.loading">
 
@@ -10,7 +10,8 @@
                 class="p-0"
                 v-for="neighbor in toListNeighbors" :key="neighbor.name"
             >
-                <v-img
+                <Flag :country="neighbor" />
+                <!-- v-img
                     class="mb-3 ml-0 mr-0 neighbor-img"
                     width="316"
                     height="181"
@@ -31,7 +32,7 @@
                             ></v-progress-circular>
                         </v-row>
                     </template>
-                </v-img>
+                </v-img> -->
             </v-col>
         </v-row>
 
@@ -77,11 +78,9 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Loader from '@/components/Loader'
 
 export default {
     name: 'NeighborsCountries',
-    components: { Loader },
     data () {
         return {
             loading: null,

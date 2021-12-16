@@ -15,7 +15,8 @@
                 class="d-flex justify-center align-center"
             >
                 <nuxt-link :to="'country/' + country.alpha2Code" @click="goToCountryPage(country.alpha2Code)">
-                    <v-tooltip top color="secondary">
+                    <Flag :country="country"/>
+                    <!-- <v-tooltip top color="secondary">
                         <template v-slot:activator="{ on, attrs }">
                             <v-img
                                 class="country-img mb-3"
@@ -41,7 +42,7 @@
                             </v-img>
                         </template>
                         <span>{{ country.name }}</span>
-                    </v-tooltip>
+                    </v-tooltip> -->
                 </nuxt-link>
             </v-col>
         </v-row>
@@ -290,19 +291,5 @@ div .active {
 
 .pagination :hover:not(.active) {
     background-color: #ddd;
-}
-
-@media screen and (max-width: 550px) {
-    .country-img, .flag {
-        width: 100% !important;
-    }
-}
-
-.country-img {
-    width: 316px;
-    height: 181px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding: 0;
-    object-fit: contain;
 }
 </style>

@@ -67,12 +67,10 @@
 </template>
 
 <script>
-import Loader from '@/components/Loader'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
     name: 'SelectedCountry',
-    components: { Loader },
     data () {
         return {
             flagData: [],
