@@ -11,37 +11,13 @@
                 md="6"
                 lg="4"
                 v-for="country in listItems"
-                :key="country.alpha3Code"
+                :key="country.alpha2Code"
                 class="d-flex justify-center align-center"
             >
-                <nuxt-link :to="'country/' + country.alpha2Code" @click="goToCountryPage(country.alpha2Code)">
-                    <v-tooltip top color="secondary">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-img
-                                class="country-img mb-3"
-                                :src="country.flag"
-                                :lazy-src="country.flag"
-                                :alt="country.name"
-                                v-bind="attrs"
-                                v-on="on"
-                                max-width="316"
-                            >
-                                <template v-slot:placeholder>
-                                    <v-row
-                                        class="fill-height ma-0"
-                                        align="center"
-                                        justify="center"
-                                    >
-                                        <v-progress-circular
-                                            indeterminate
-                                            color="primary lighten-2"
-                                        ></v-progress-circular>
-                                    </v-row>
-                                </template>
-                            </v-img>
-                        </template>
-                        <span>{{ country.name }}</span>
-                    </v-tooltip>
+                <nuxt-link
+                    :to="'country/' + country.alpha2Code" @click="goToCountryPage(country.alpha2Code)"
+                >
+                    <Flag :country="country"/>
                 </nuxt-link>
             </v-col>
         </v-row>
@@ -52,7 +28,7 @@
                     <div
                         v-show="!disablePrevButton"
                         @click="prevPage()"
-                        class="back-page cursor"
+                        class="back-page change-cursor"
                     >   ❮ &nbsp;
                     </div>
 
@@ -61,7 +37,7 @@
                         :key="page"
                     >
                         <div
-                            class="page cursor"
+                            class="page change-cursor"
                             :class="currentPage === page ? 'active' : ''"
                             @click="currentPage = page"
                         >
@@ -72,7 +48,7 @@
                     <div
                         v-show="!disableNextButton"
                         @click="nextPage()"
-                        class="next-page cursor"
+                        class="next-page change-cursor"
                     >   &nbsp; ❯
                     </div>
                 </div>
@@ -242,7 +218,7 @@ export default {
 </script>
 
 <style scoped>
-.cursor {
+.change-cursor {
     cursor: pointer;
 }
 
@@ -290,19 +266,5 @@ div .active {
 
 .pagination :hover:not(.active) {
     background-color: #ddd;
-}
-
-@media screen and (max-width: 550px) {
-    .country-img, .flag {
-        width: 100% !important;
-    }
-}
-
-.country-img {
-    width: 316px;
-    height: 181px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding: 0;
-    object-fit: contain;
 }
 </style>
