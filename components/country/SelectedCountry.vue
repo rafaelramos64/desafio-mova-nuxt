@@ -2,7 +2,7 @@
     <v-container>
         <Loader v-show="loading" /> 
 
-        <v-row v-show="!loading" class="mt-5" >
+        <v-row v-show="!loading" class="mt-5">
             <v-col cols="12" class="px-4">
                 <v-row no-gutters>
                     <v-col cols="12" md="5" class="px-0">
@@ -30,31 +30,33 @@
                     <v-col cols="12" md="4" class="text-left pt-1 country-info" style="height: 242px">
                         <ul>
                             <li class="mb-5">
-                                <span>Nome: {{ flagData.name }}</span>
+                                <span class="text-title-color">Nome:</span>
+                                {{ flagData.name }}
                             </li>
 
                             <li class="mb-5">
-                                <span>Capital: {{ flagData.capital }}</span>
-                            </li>
-                            <li class="mb-5">
-                                <span>
-                                    Região: 
-                                    <a @click="changeToHome(flagData.region) " class="region" href="">{{ flagData.region }}</a>
-                                </span>
+                                <span class="text-title-color">Capital:</span>
+                                {{ flagData.capital }}
                             </li>
 
                             <li class="mb-5">
-                                <span>Sub-região: {{ flagData.subregion }}</span>
+                                <span class="text-title-color">Região:</span>
+                                <a @click="changeToHome(flagData.region) " class="region" href="">{{ flagData.region }}</a>
                             </li>
 
                             <li class="mb-5">
-                                <span>População: {{ flagData.population }}</span>
+                                <span class="text-title-color">Sub-região:</span>
+                                {{ flagData.subregion }}
+                            </li>
+
+                            <li class="mb-5">
+                                <span class="text-title-color">População:</span>
+                                {{ flagData.population }}
                             </li>
 
                             <li>
-                                <span>
-                                    Linguas: <span v-for="(lang, key) in flagData.languages" :key="key">{{ lang.name }}, {{  }}</span>
-                                </span>
+                                <span class="text-title-color">Linguas:</span>
+                                <span v-for="(lang, key) in flagData.languages" :key="key">{{ lang.name }}, {{  }}</span>
                             </li>
                         </ul>
                     </v-col>
@@ -151,7 +153,12 @@ ul {
 }
 
 .region {
-    text-decoration: none;
+   text-decoration: none;
+}
+
+.text-title-color {
+    color: #02AE99;
+    font-weight: bold;
 }
 
 </style>

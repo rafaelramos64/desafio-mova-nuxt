@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <span>Países Vizinhos: </span><br><br><br>
+        <span class="text-title-color">Países Vizinhos: </span><br><br><br>
         <Loader v-show="this.loading"> </Loader>
 
         <v-row v-show="!this.loading">
@@ -266,5 +266,10 @@ div .active {
 
 .pagination :hover:not(.active) {
     background-color: #ddd;
+}
+
+.text-title-color {
+    color: #02AE99;
+    font-weight: bold;
 }
 </style>
