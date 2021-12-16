@@ -9,7 +9,7 @@
                     <SelectFilterType />
                 </v-col>
 
-                <v-col v-show="getTypeOfFilter.typeValue !== ''" class="d-flex justify-center" cols="12" sm="5" md="4">
+                <v-col v-show="getTypeOfFilter.value !== ''" class="d-flex justify-center" cols="12" sm="5" md="4">
                     <SelectByFilterType />
                 </v-col>
 

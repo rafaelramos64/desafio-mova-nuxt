@@ -25,13 +25,23 @@ export default {
         }
     },
 
+    mounted () {
+        if (this.getSelectedRegionSearch) {
+            this.selectedFilterType = this.getTypeOfFilter
+        }
+    },
+
     computed: {
-        ...mapGetters(['getTypeOfFilter'])
+        ...mapGetters(['getTypeOfFilter', 'getSelectedRegionSearch'])
     },
 
     watch: {
         selectedFilterType () {
-            this.changeType()
+            if (this.getSelectedRegionSearch) {
+                this.selectedFilterType = this.getTypeOfFilter
+            } else {
+                this.changeType()
+            }
         }
     },
 
@@ -52,7 +62,7 @@ export default {
                 }
             }
 
-            this.CHANGE_TYPE_OF_FILTER({ typeText: typeOfFilter.text, typeValue: typeOfFilter.value })
+            this.CHANGE_TYPE_OF_FILTER({ text: typeOfFilter.text, value: typeOfFilter.value })
         }
     }
 }

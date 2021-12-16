@@ -2,7 +2,7 @@
     <div>
         <v-combobox
             v-model="selectedFilteredType"
-            :label="`Escolha um(a) ${getTypeOfFilter.typeText}`"
+            :label="`Escolha um(a) ${getTypeOfFilter.text}`"
             :items="filteredTypesList"
         ></v-combobox>
     </div>
@@ -27,7 +27,11 @@ export default {
     },
 
     mounted () {
-        this.getCountries() 
+        if (this.getSelectedRegionSearch) {
+            this.selectedFilteredType = this.getFilteredType
+        }
+            /* this.getCountries() */
+            this.CHANGE_SELECTED_REGION_SEARCH(false)
     },
 
     computed: {
@@ -54,23 +58,18 @@ export default {
             const { data } = await this.$axios.get('/all')
             this.allCountries = data
 
-            this.getTypeOfFilter.typeValue === 'name' ? this.getAllCountries() : ''
+            this.getTypeOfFilter.value === 'name' ? this.getAllCountries() : ''
         },
 
         changeTypeFiltered () {
-            /* if (this.getSelectedRegionSearch) {
-                this.selectedFilteredType = this.getFilteredType.typeValue
-                this.CHANGE_SELECTED_REGION_SEARCH(false)
-            } */
-            if (this.getTypeOfFilter.typeValue === 'region') {
-                /* this.CHANGE_TYPE_OF_FILTER(this.getTypeOfFilter) */
+            if (this.getTypeOfFilter.value === 'region') {
                 this.CHANGE_FILTERED_TYPE(this.selectedFilteredType.value)
             }
 
-            else if (this.getTypeOfFilter.typeValue === 'lang') {
+            else if (this.getTypeOfFilter.value === 'lang') {
                 if (this.selectedFilteredType?.value) {
-                    this.CHANGE_TYPE_OF_FILTER({ typeText: this.getTypeOfFilter.typeText,
-                        typeValue: this.getTypeOfFilter.typeValue })
+                    this.CHANGE_TYPE_OF_FILTER({ text: this.getTypeOfFilter.text,
+                        value: this.getTypeOfFilter.value })
 
                     this.CHANGE_FILTERED_TYPE(this.selectedFilteredType)
                 }
@@ -83,15 +82,15 @@ export default {
         getFilters () {
             this.selectedFilteredType = ''
 
-            if (this.getTypeOfFilter.typeValue === 'region') {
+            if (this.getTypeOfFilter.value === 'region') {
                 this.filteredTypesList = this.regions
-            } else if (this.getTypeOfFilter.typeValue === 'capital') {
+            } else if (this.getTypeOfFilter.value === 'capital') {
                 this.getAllCapitals()
-            } else if (this.getTypeOfFilter.typeValue === 'lang') {
+            } else if (this.getTypeOfFilter.value === 'lang') {
                 this.getAllLanguages()
-            } else if (this.getTypeOfFilter.typeValue === 'name') {
+            } else if (this.getTypeOfFilter.value === 'name') {
                 this.getAllCountries()
-            } else if (this.getTypeOfFilter.typeValue === 'callingcode') {
+            } else if (this.getTypeOfFilter.value === 'callingcode') {
                 this.getAllCallingCodes()
             }
         },
