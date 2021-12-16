@@ -210,8 +210,6 @@ export default {
             setTimeout(() => {
                 this.ADD_ALL_FLAGS({ type: 'alpha', filtered: alphaCode })
             }, 1000)
-            
-            /* this.$router.push({ name: 'Country', params: { alpha: alphaCode } }) */
         }
     }
 }

@@ -106,9 +106,6 @@ export default {
             this.CHANGE_SELECTED_REGION_SEARCH(true)
 
             this.$router.push({ name : 'index'})
-
-            setTimeout(() => {
-            }, 200)
         }
     }
 }

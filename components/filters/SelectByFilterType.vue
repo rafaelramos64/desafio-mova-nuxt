@@ -30,8 +30,9 @@ export default {
         if (this.getSelectedRegionSearch) {
             this.selectedFilteredType = this.getFilteredType
         }
-            /* this.getCountries() */
-            this.CHANGE_SELECTED_REGION_SEARCH(false)
+
+        this.getCountries()
+        this.CHANGE_SELECTED_REGION_SEARCH(false)
     },
 
     computed: {
@@ -59,6 +60,15 @@ export default {
             this.allCountries = data
 
             this.getTypeOfFilter.value === 'name' ? this.getAllCountries() : ''
+        },
+
+        getAllCountries () {
+            const countries = []
+
+            for (const country in this.allCountries) {
+                countries.push(this.allCountries[country].name)
+            }
+            this.filteredTypesList = countries.filter(item => item !== '')
         },
 
         changeTypeFiltered () {
@@ -125,15 +135,6 @@ export default {
             const uniklanguagesWithInitials = [...new Set(languagesWithInitials)]
 
             this.filteredTypesList = [...uniklanguagesWithInitials]
-        },
-
-        getAllCountries () {
-            const countries = []
-
-            for (const country in this.allCountries) {
-                countries.push(this.allCountries[country].name)
-            }
-            this.filteredTypesList = countries.filter(item => item !== '')
         },
 
         getAllCallingCodes () {
