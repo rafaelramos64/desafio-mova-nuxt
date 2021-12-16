@@ -26,7 +26,7 @@ export default {
         ...mapActions(['ADD_ALL_FLAGS']),
 
         searchFlagsByType () {
-            this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter.typeValue, filtered: this.getFilteredType })
+            this.ADD_ALL_FLAGS({ type: this.getTypeOfFilter.value, filtered: this.getFilteredType })
         }
     }
 }

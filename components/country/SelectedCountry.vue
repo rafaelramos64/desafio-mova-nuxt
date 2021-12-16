@@ -21,9 +21,11 @@
                                 {{ flagData.capital }}
                             </li>
 
-                            <li class="mb-5">
+                            <li class="mb-5 d-flex">
                                 <span class="text-title-color">Região:</span>
-                                <a @click="changeToHome(flagData.region) " class="region" href="">{{ flagData.region }}</a>
+                                <div @click="changeToHome(flagData.region)" class="region">
+                                    {{ flagData.region }}
+                                </div>
                             </li>
 
                             <li class="mb-5">
@@ -89,19 +91,21 @@ export default {
         ...mapActions([
             'ADD_BORDERS',
             'CHANGE_TYPE_OF_FILTER',
-            'CHANGING_FILTERED_TYPE',
-            'CHANGE_SELECTED_REGION_SEARCH'
+            'CHANGE_FILTERED_TYPE',
+            'CHANGE_SELECTED_REGION_SEARCH',
+            'ADD_ALL_FLAGS'
         ]),
 
         changeToHome (region) {
             const regionToFilter = region.toLowerCase()
 
-            setTimeout(() => {
-                this.CHANGE_TYPE_OF_FILTER({ typeText: 'Região', typValue: 'region' })
-                this.CHANGING_FILTERED_TYPE(regionToFilter)
-                this.CHANGE_SELECTED_REGION_SEARCH(true)
-            }, 200)
-            this.$router.push({ name: 'Home' })
+            this.CHANGE_TYPE_OF_FILTER({ text: 'Região', value: 'region' })
+            this.CHANGE_FILTERED_TYPE(regionToFilter)
+
+            this.ADD_ALL_FLAGS({type: 'region', filtered: regionToFilter})
+            this.CHANGE_SELECTED_REGION_SEARCH(true)
+
+            this.$router.push({ name : 'index'})
         }
     }
 }

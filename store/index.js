@@ -1,7 +1,7 @@
 export const state = () => ({
     typeOfFilter: {
-        typeText: 'País',
-        typeValue: 'name'
+        text: 'País',
+        value: 'name'
     },
     filteredType: null,
     allFlags: [],
@@ -37,8 +37,8 @@ export const getters = {
 
 export const mutations = {
     change_type_of_filter (state, payload) {
-        state.typeOfFilter.typeText = payload.typeText
-        state.typeOfFilter.typeValue = payload.typeValue
+        state.typeOfFilter.text = payload.text
+        state.typeOfFilter.value = payload.value
     },
 
     add_all_flags (state, payload) {
@@ -60,10 +60,6 @@ export const mutations = {
     change_selected_region_search (state, payload) {
         state.selectedRegionSearch = payload
     },
-
-    /* change_pagination (state, payload) {
-        state.itemsToShow = payload
-    } */
 }
 
 export const actions = {
@@ -71,9 +67,18 @@ export const actions = {
         context.commit('change_type_of_filter', payload)
     },
 
+    CHANGE_FILTERED_TYPE (context, payload) {
+        if (payload?.value) {
+            context.commit('changing_filtered_type', payload.value)
+        } else {
+            context.commit('changing_filtered_type', payload)
+        }
+    },
+
     async ADD_ALL_FLAGS (context, payload) {
         const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
         let filteredFlags = []
+        console.log(payload)
         try {
             if (payload?.type === 'alpha') {   
                 const { data } = await this.$axios.get(params)
@@ -93,14 +98,6 @@ export const actions = {
         }
     },
 
-    CHANGE_FILTERED_TYPE (context, payload) {
-        if (payload?.value) {
-            context.commit('changing_filtered_type', payload.value)
-        } else {
-            context.commit('changing_filtered_type', payload)
-        }
-    },
-
     async ADD_BORDERS (context, payload) {
         const borders = []
         
@@ -112,20 +109,12 @@ export const actions = {
 
         const { data } = await this.$axios.get(`/alpha?codes=${params}`)
 
-        /* for (const i in payload) {
-            const { data } = await this.$axios.get(`/${alpha}/${payload[i]}`)
-            borders.push(data)
-        } */
         context.commit('add_borders', data)
     },
 
     CHANGE_SELECTED_REGION_SEARCH (context, payload) {
         context.commit('change_selected_region_search', payload)
     },
-
-    /* CHANGE_PAGINATION (context, payload) {
-        context.commit('change_pagination', payload)
-    }, */
 }
 
 export const modules = {}
