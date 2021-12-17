@@ -1,12 +1,12 @@
 <template>
-    <v-container fluid class="mx-12">
-        <v-row class="mb-5">
+    <v-container>
+        <v-row>
             <v-col>
                 <SelectedCountry />
             </v-col>
-        </v-row><br />
+        </v-row>
 
-        <v-row class="mt-4 mb-5">
+        <v-row class="mb-5">
             <Loader v-show="this.loading" />
             <v-col v-show="!this.loading">
                 <NeighborsCountries />
