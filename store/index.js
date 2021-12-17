@@ -78,7 +78,6 @@ export const actions = {
     async ADD_ALL_FLAGS (context, payload) {
         const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
         let filteredFlags = []
-        console.log(payload)
         try {
             if (payload?.type === 'alpha') {   
                 const { data } = await this.$axios.get(params)

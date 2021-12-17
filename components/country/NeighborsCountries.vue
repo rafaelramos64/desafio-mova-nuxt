@@ -1,56 +1,66 @@
 <template>
-    <v-container>
-        <span class="text-title-color">Países Vizinhos: </span><br><br><br>
-        <Loader v-show="this.loading" />
+    <v-container :fluid="$vuetify.breakpoint.mdAndDown">
+        <v-row justify="center">
+            <v-col :class="$vuetify.breakpoint.lgAndUp ? 'px-12' : ''">
+                <Loader v-show="this.loading" />
 
-        <v-row v-show="!this.loading">
-
-            <v-col
-                cols="12" md="4"
-                class="p-0"
-                v-for="neighbor in toListNeighbors" :key="neighbor.name"
-            >
-                <div @click="reloadCurrentPage(neighbor.alpha2Code)">
-                    <Flag :country="neighbor" />
-                </div>
-            </v-col>
-        </v-row>
-
-        <v-row v-show="this.getBorders.length > 2" class="mt-3">
-            <v-col>
-                <div class="pagination d-flex justify-center">
-                    <div
-                        v-show="!disablePrevButton"
-                        @click="prevPage()"
-                        class="back-page cursor"
+                <span
+                    v-show="!this.loading"
+                    class="text-title-color"
+                    :class="$vuetify.breakpoint.mdAndUp ? 'ml-4' : 'd-flex justify-center'"
+                >
+                    Países Vizinhos:
+                </span><br /><br /><br />
+                
+                <v-row v-show="!this.loading">
+                    <v-col
+                        cols="12" md="6" lg="4"
+                        class="p-0 d-flex justify-center"
+                        v-for="neighbor in toListNeighbors" :key="neighbor.name"
                     >
-                        ❮ &nbsp; 
-                    </div>
-                    <div
-                        v-for="page in allowList"
-                        :key="page"
-                    >
-                        <div
-                            class="page cursor"
-                            :class="currentPage === page ? 'active' : ''"
-                            @click="currentPage = page"
-                        >
-                            {{ page }}
+                        <div @click="reloadCurrentPage(neighbor.alpha2Code)">
+                            <Flag :country="neighbor" />
                         </div>
-                    </div>
-                    <div
-                        v-show="!disableNextButton"
-                        @click="nextPage()"
-                        class="next-page cursor"
-                    >
-                        &nbsp; ❯
-                    </div>
-                </div>
-            </v-col>
-        </v-row>
-        <v-row v-if="!this.getBorders.length > 0">
-            <v-col class="pl-15">
-                <span style="color: #6D2080">Nenhum país encontrado </span>
+                    </v-col>
+                </v-row>
+
+                <v-row v-show="this.getBorders.length > 2" class="mt-3">
+                    <v-col>
+                        <div class="pagination d-flex justify-center">
+                            <div
+                                v-show="!disablePrevButton"
+                                @click="prevPage()"
+                                class="back-page cursor"
+                            >
+                                ❮ &nbsp; 
+                            </div>
+                            <div
+                                v-for="page in allowList"
+                                :key="page"
+                            >
+                                <div
+                                    class="page cursor"
+                                    :class="currentPage === page ? 'active' : ''"
+                                    @click="currentPage = page"
+                                >
+                                    {{ page }}
+                                </div>
+                            </div>
+                            <div
+                                v-show="!disableNextButton"
+                                @click="nextPage()"
+                                class="next-page cursor"
+                            >
+                                &nbsp; ❯
+                            </div>
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-row v-if="!this.getBorders.length > 0">
+                    <v-col class="pl-15">
+                        <span style="color: #6D2080">Nenhum país encontrado </span>
+                    </v-col>
+                </v-row>
             </v-col>
         </v-row>
     </v-container>
@@ -242,5 +252,9 @@ div .active {
 .text-title-color {
     color: #02AE99;
     font-weight: bold;
+}
+
+.back-page:hover, .next-page:hover, .page:hover {
+    cursor: pointer;
 }
 </style>

@@ -1,15 +1,20 @@
 <template>
-    <v-container>
+    <v-container :fluid="$vuetify.breakpoint.mdAndDown">
         <Loader v-show="loading" /> 
 
         <v-row v-show="!loading" class="mt-5">
-            <v-col cols="12" class="px-4">
-                <v-row no-gutters>
-                    <v-col cols="12" md="5" class="px-0">
+            <v-col cols="12" :class="$vuetify.breakpoint.lgAndUp ? 'px-12' : ''">
+                <v-row no-gutters :justify="$vuetify.breakpoint.mdAndDown ? 'center' : ''">
+                    <div>
                         <Flag selectedCountry :country="flagData" />
-                    </v-col>
+                    </div>
 
-                    <v-col cols="12" md="4" class="text-left pt-1 country-info" style="height: 242px">
+                    <v-col
+                        cols="12"
+                        md="4"
+                        class="text-left pt-2 ml-5 country-info"
+                        :class="$vuetify.breakpoint.mdAndDown ? 'd-flex justify-center' : ''"
+                    >
                         <ul>
                             <li class="mb-5">
                                 <span class="text-title-color">Nome:</span>
@@ -23,7 +28,7 @@
 
                             <li class="mb-5 d-flex">
                                 <span class="text-title-color">Região:</span>
-                                <div @click="changeToHome(flagData.region)" class="region">
+                                <div @click="changeToHome(flagData.region)" class="region ml-1">
                                     {{ flagData.region }}
                                 </div>
                             </li>
@@ -127,8 +132,13 @@ ul {
     margin: 0 !important;
 }
 
-.region:not(:hover) {
-   text-decoration: none;
+.region {
+    color: #6D2080;
+}
+
+.region:hover {
+   text-decoration: underline;
+   cursor: pointer;
 }
 
 .text-title-color {
@@ -136,4 +146,7 @@ ul {
     font-weight: bold;
 }
 
+.country-info {
+    height: 242px;
+}
 </style>
