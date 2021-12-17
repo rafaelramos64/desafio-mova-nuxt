@@ -4,7 +4,7 @@
 
         <v-row v-show="!loading" class="mt-5">
             <v-col cols="12" :class="$vuetify.breakpoint.lgAndUp ? 'px-12' : ''">
-                <v-row no-gutters :justify="$vuetify.breakpoint.mdAndDown ? 'center' : ''">
+                <v-row no-gutters>
                     <div>
                         <Flag selectedCountry :country="flagData" />
                     </div>
