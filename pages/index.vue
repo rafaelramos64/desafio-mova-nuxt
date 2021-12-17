@@ -5,24 +5,17 @@
                 align="center"
                 :justify="$vuetify.breakpoint.smAndDown ? 'center' : 'space-around'"
                 class="mb-3 mt-5 mx-aut">
-                <v-col
-                    class="justify-center"
-                    :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''"
-                    cols="10"
-                    sm="5" md="4"
+                <v-col cols="10" md="3" xl="2"
                 >
                     <SelectFilterType />
                 </v-col>
 
-                <v-col
-                    v-show="getTypeOfFilter.value !== ''"
-                    class="justify-center"
-                    :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''" 
-                    cols="10" sm="5" md="4">
+                <v-col v-show="getTypeOfFilter.value !== ''" cols="10" md="3" xl="2"
+                >
                     <SelectByFilterType />
                 </v-col>
 
-                <v-col class="d-flex justify-center" cols="5" sm="4">
+                <v-col class="d-flex justify-center" cols="5" sm="4" md="2" lg="4">
                     <Research/>
                 </v-col>
             </v-row>
