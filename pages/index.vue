@@ -4,12 +4,21 @@
             <v-row
                 align="center"
                 :justify="$vuetify.breakpoint.smAndDown ? 'center' : 'space-around'"
-                class="mb-3 mt-5 mx-auto">
-                <v-col class="d-flex justify-center" cols="12" sm="5" md="4">
+                class="mb-3 mt-5 mx-aut">
+                <v-col
+                    class="justify-center"
+                    :class="$vuetify.breakpoint.smAndUp ? 'd-dlex' : ''"
+                    cols="10"
+                    sm="5" md="4"
+                >
                     <SelectFilterType />
                 </v-col>
 
-                <v-col v-show="getTypeOfFilter.value !== ''" class="d-flex justify-center" cols="12" sm="5" md="4">
+                <v-col
+                    v-show="getTypeOfFilter.value !== ''"
+                    class="justify-center"
+                    :class="$vuetify.breakpoint.smAndUp ? 'd-dlex' : ''" 
+                    cols="10" sm="5" md="4">
                     <SelectByFilterType />
                 </v-col>
 
