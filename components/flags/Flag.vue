@@ -43,13 +43,7 @@ export default {
 }
 </script>
 
-<style scoped>
-@media screen and (max-width: 550px) {
-    .country-img, .flag {
-        width: 100% !important;
-    }
-}
-
+<style lang="scss" scoped>
 .country-img {
     width: 316px;
     height: 181px;
@@ -64,7 +58,20 @@ export default {
     max-width: 443px;
     max-height: 258px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding: 0 !important;
+    padding: 0;
+    @media screen and (max-width: 599px) {
+        min-width: 363px;
+        min-height: 178px;
+        max-width: 363px;
+        max-height: 178px;
+    }
+
+    @media screen and (max-width: 380px) {
+        min-width: 316px;
+        min-height: 181px;
+        max-width: 316px;
+        max-height: 181px;
+    }
 }
 
 .change-cursor {

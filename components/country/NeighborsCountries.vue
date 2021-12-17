@@ -7,12 +7,11 @@
                 <span
                     v-show="!this.loading"
                     class="text-title-color"
-                    :class="$vuetify.breakpoint.mdAndUp ? 'ml-4' : 'd-flex justify-center'"
                 >
                     Países Vizinhos:
-                </span><br /><br /><br />
+                </span>
                 
-                <v-row v-show="!this.loading">
+                <v-row v-show="!this.loading" :class="$vuetify.breakpoint.mdAndUp ? 'mt-8' : 'mt-5'">
                     <v-col
                         cols="12" md="6" lg="4"
                         class="p-0 d-flex justify-center"
@@ -57,8 +56,8 @@
                     </v-col>
                 </v-row>
                 <v-row v-if="!this.getBorders.length > 0">
-                    <v-col class="pl-15">
-                        <span style="color: #6D2080">Nenhum país encontrado </span>
+                    <v-col :class="$vuetify.breakpoint.mdAndUp ? 'pl-15' : ''">
+                        <span class="not-found-text">Nenhum país encontrado </span>
                     </v-col>
                 </v-row>
             </v-col>
@@ -202,7 +201,7 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style lang="scss" scoped>
 .pagination {
     color: #8d8d8d;
 }
@@ -252,9 +251,26 @@ div .active {
 .text-title-color {
     color: #02AE99;
     font-weight: bold;
+    @media only screen and (max-width: 1263px) {
+        margin-left: 3.5rem;
+    }
+
+    @media only screen and (max-width: 959px) {
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .back-page:hover, .next-page:hover, .page:hover {
     cursor: pointer;
+}
+
+.not-found-text {
+    color: #6D2080;
+    @media only screen and (max-width: 959px) {
+        display: flex;
+        justify-content: center;
+    }
 }
 </style>
