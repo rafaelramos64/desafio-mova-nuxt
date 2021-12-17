@@ -7,7 +7,7 @@
                 class="mb-3 mt-5 mx-aut">
                 <v-col
                     class="justify-center"
-                    :class="$vuetify.breakpoint.smAndUp ? 'd-dlex' : ''"
+                    :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''"
                     cols="10"
                     sm="5" md="4"
                 >
@@ -17,7 +17,7 @@
                 <v-col
                     v-show="getTypeOfFilter.value !== ''"
                     class="justify-center"
-                    :class="$vuetify.breakpoint.smAndUp ? 'd-dlex' : ''" 
+                    :class="$vuetify.breakpoint.smAndUp ? 'd-flex' : ''" 
                     cols="10" sm="5" md="4">
                     <SelectByFilterType />
                 </v-col>
