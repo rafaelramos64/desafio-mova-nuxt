@@ -14,6 +14,9 @@
 # Link para a aplicação online
 ### https://desafio-mova-nuxt.netlify.app/
 
+# Link para a descrição do desafio
+### https://docs.google.com/document/d/1mszA5rE19c5FOSEzeEIMhXdOC6SKIMcTO7cSEfiVNKk/edit?usp=sharing
+
 
 ## Build Setup
 
